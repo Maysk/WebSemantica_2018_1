@@ -1,0 +1,37 @@
+# Tirados de http://compras.dados.gov.br/docs/lista-metodos-fornecedores.html
+
+fornecedores:
+Link: http://compras.dados.gov.br/docs/fornecedores/v1/fornecedores.html
+
+ambitos_ocorrencia
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/ambitos_ocorrencia.html
+
+cnaes
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/cnaes.html
+
+fornecedores
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/fornecedores.html
+
+linhas_fornecimento
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/linhas_fornecimento.html
+
+municipios
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/municipios.html
+
+naturezas_juridicas
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/naturezas_juridicas.html
+
+ocorrencias_fornecedores
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/ocorrencias_fornecedores.html
+
+portes_empresa
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/portes_empresa.html
+
+prazos_ocorrencia
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/prazos_ocorrencia.html
+
+ramos_negocio
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/ramos_negocio.html
+
+tipos_ocorrencia
+	Link: http://compras.dados.gov.br/docs/fornecedores/v1/tipos_ocorrencia.html

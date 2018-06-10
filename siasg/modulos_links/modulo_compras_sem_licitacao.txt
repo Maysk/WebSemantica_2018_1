@@ -1,0 +1,7 @@
+# Tirados de http://compras.dados.gov.br/docs/lista-metodos-compraSemLicitacao.html
+
+compras_sem_licitacao:
+	Link: http://compras.dados.gov.br/docs/compraSemLicitacao/v1/compras_slicitacao.html
+
+itens_compras_sem_licitacao	
+	Link: http://compras.dados.gov.br/docs/compraSemLicitacao/v1/itens_compras_slicitacao.html

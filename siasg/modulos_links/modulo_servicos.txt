@@ -1,0 +1,19 @@
+# Tirados de http://compras.dados.gov.br/docs/lista-metodos-servicos.html
+
+secoes	
+	Link: http://compras.dados.gov.br/docs/servicos/v1/secoes.html
+
+divisoes	
+	Link: http://compras.dados.gov.br/docs/servicos/v1/divisoes.html
+
+grupos	
+	Link: http://compras.dados.gov.br/docs/servicos/v1/grupos.html
+
+classes	
+	Link: http://compras.dados.gov.br/docs/servicos/v1/classes.html
+
+subclasses	
+	Link: http://compras.dados.gov.br/docs/servicos/v1/subclasses.html
+
+servicos	
+	Link: http://compras.dados.gov.br/docs/servicos/v1/servicos.html
