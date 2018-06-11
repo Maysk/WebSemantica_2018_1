@@ -33,7 +33,7 @@ print(len(resultset))
 print("Deu Certo")
 
 for r in resultset:
-	print(r)
+	print(r)	
 	print("Inserindo no banco...")
 	db.insert_uasg(r['ativo'], r['cep'], r['id'], r['id_municipio'], r['id_orgao'], r['nome'], r['unidade_cadastradora'])
 

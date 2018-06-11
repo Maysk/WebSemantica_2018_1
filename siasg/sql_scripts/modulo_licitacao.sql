@@ -11,27 +11,6 @@
 
 --licitacoes	
 --	Link: http://compras.dados.gov.br/docs/licitacoes/v1/licitacoes.html
-CREATE TABLE UASGS(
-				ativo boolean,
-				cep text,
-				ddd text ,
-				endereco text,
-				fax text,
-				id integer,
-				id_municipio integer,
-				id_orgao integer,
-				nome text,
-				nome_mnemonico text,
-				ramal text,
-				ramal2 text,
-				sigla_uf text,
-				telefone text,
-				telefone2 text,
-				total_fornecedores_cadastrados integer,
-				total_fornecedores_recadastrados integer,
-				unidade_cadastradora boolean
-			);
-
 
 --itens_licitacao	
 --	Link: http://compras.dados.gov.br/docs/licitacoes/v1/itens_licitacao.html
@@ -62,6 +41,26 @@ CREATE TABLE UASGS(
 
 --uasgs	
 --	Link: http://compras.dados.gov.br/docs/licitacoes/v1/uasgs.html
+CREATE TABLE UASGS(
+				ativo boolean,
+				cep text,
+				ddd text ,
+				endereco text,
+				fax text,
+				id integer,
+				id_municipio integer,
+				id_orgao integer,
+				nome text,
+				nome_mnemonico text,
+				ramal text,
+				ramal2 text,
+				sigla_uf text,
+				telefone text,
+				telefone2 text,
+				total_fornecedores_cadastrados integer,
+				total_fornecedores_recadastrados integer,
+				unidade_cadastradora boolean
+			);
 
 --rdcs	
 --	Link: http://compras.dados.gov.br/docs/licitacoes/v1/rdcs.html

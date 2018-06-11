@@ -19,7 +19,7 @@ def url_fornecedor_by_id_municipio(base_url, id_municipio):
 
 ##MAIN
 
-id_municipio = "13897"
+ 
 
 req = requests.get(url_municipio_by_id(BASE_URL, id_municipio))
 
