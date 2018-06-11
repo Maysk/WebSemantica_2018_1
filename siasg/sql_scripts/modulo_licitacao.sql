@@ -20,6 +20,15 @@
 
 --orgaos	
 --	Link: http://compras.dados.gov.br/docs/licitacoes/v1/orgaos.html
+CREATE TABLE orgaos(
+				ativo boolean,
+				codigo integer,
+				codigo_siorg text,
+				codigo_tipo_adm integer,
+				codigo_tipo_esfera text,
+				codigo_tipo_poder integer,
+				nome text
+			);
 
 --precos_praticados	
 --	Link: http://compras.dados.gov.br/docs/licitacoes/v1/precos_praticados.html
@@ -41,7 +50,7 @@
 
 --uasgs	
 --	Link: http://compras.dados.gov.br/docs/licitacoes/v1/uasgs.html
-CREATE TABLE UASGS(
+CREATE TABLE uasgs(
 				ativo boolean,
 				cep text,
 				ddd text ,
@@ -57,8 +66,6 @@ CREATE TABLE UASGS(
 				sigla_uf text,
 				telefone text,
 				telefone2 text,
-				total_fornecedores_cadastrados integer,
-				total_fornecedores_recadastrados integer,
 				unidade_cadastradora boolean
 			);
 
