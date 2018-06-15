@@ -1,0 +1,3 @@
+csv_orgaos_versão_mes.ano.csv foi retirado da pagina:
+	http://www.comprasnet.gov.br/livre/pregao/ata0.asp
+	http://www.comprasnet.gov.br/livre/pregao/Pesquisar_Uasg.asp?pUf=&pForm=frmLista&pListaUasg=lstUasg&Opcao=3&TpPregao=E
