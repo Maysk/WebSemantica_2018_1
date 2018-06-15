@@ -1,3 +1,21 @@
 csv_orgaos_versão_mes.ano.csv foi retirado da pagina:
 	http://www.comprasnet.gov.br/livre/pregao/ata0.asp
 	http://www.comprasnet.gov.br/livre/pregao/Pesquisar_Uasg.asp?pUf=&pForm=frmLista&pListaUasg=lstUasg&Opcao=3&TpPregao=E
+
+
+Vale a pena ?
+	http://www.comprasnet.gov.br/ajuda/fornecedores/m_cadastro.asp
+	http://www.comprasnet.gov.br/ajuda/fornecedores/m_cidades.asp?uf=CE&estado=Cear%E1
+
+
+http://www.comprasnet.gov.br/livre/uasg/Catalogo_Resp.asp
+
+
+http://comprasnet.gov.br/acesso.asp?url=/ConsultaLicitacoes/ConsLicitacao_Filtro.asp
+
+
+http://comprasnet.gov.br/acesso.asp?url=/livre/Resultado/conrelit00.asp
+
+http://www.comprasnet.gov.br/livre/pregao/ata4.asp?lstSrp=T&uf=&numprp=82003&co_uasg=&rdTpPregao=E&lstICMS=T&dt_ini_sessao=&dt_fim_sessao=#82003-153080
+
+https://www.comprasgovernamentais.gov.br/index.php/consultass

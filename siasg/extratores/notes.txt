@@ -1,9 +1,16 @@
-import requests
-import json 
-import os
-import database as db
+#import requests
+#import json 
+#import os
+#import database as db
 
-url_uasg = "http://compras.dados.gov.br/licitacoes/v1/orgaos.json?offset={}"
+#url_uasg = "http://compras.dados.gov.br/licitacoes/v1/orgaos.json?offset={}"
+
+
+
+#lista_de_orgaos_ids = [element for (element,) in db.get_orgaos_relevantes()]
+
+
+
 
 #http://ck.govdata.gov.br/organization/mp
 #https://www.governodigital.gov.br/noticias/novo-sicaf-agiliza-acesso-de-fornecedores-a-administracao-publica
@@ -13,10 +20,3 @@ url_uasg = "http://compras.dados.gov.br/licitacoes/v1/orgaos.json?offset={}"
 #https://www.comprasgovernamentais.gov.br/index.php/placar-licitacoes
 #https://www.comprasgovernamentais.gov.br/index.php/consultass/81-gestor-de-compras/consultas/725-licitacoes-consultas
 #http://comprasnet.gov.br/acesso.asp?url=/livre/Resultado/conrelit00.asp
-
-lista_de_orgaos_ids = [element for (element,) in db.get_orgaos_relevantes()]
-
-print (lista_de_orgaos_ids)
-
-for orgao_id in lista_de_orgaos_ids:
-	pass

@@ -15,38 +15,40 @@ uasg_json = req.json()
 
 limit = uasg_json['count']
 
+
+atributos_validos = ['ativo', 'cep', 'ddd', 'endereco', 'fax', 'id', 'id_municipio', 
+						'id_orgao', 'nome', 'nome_mnemonico', 'ramal', 'ramal2', 'sigla_uf', 
+						'telefone', 'telefone2', 'unidade_cadastradora']
+
 resultset = []
+
+#https://stackoverflow.com/questions/38987/how-to-merge-two-dictionaries-in-a-single-expression
+
 while(offset<limit):
 	print(offset)
 	url = url_uasg.format(offset)
 	req = requests.get(url)
 	uasg_json = req.json()
+	
 	for i in range(len(uasg_json['_embedded']['uasgs'])):
-		if ('id_municipio' in uasg_json['_embedded']['uasgs'][i] 
-				and uasg_json['_embedded']['uasgs'][i]['id_municipio'] in id_):
-			print("Aqui")
-			resultset.append(uasg_json['_embedded']['uasgs'][i])
+		if ('id_municipio' in uasg_json['_embedded']['uasgs'][i] and uasg_json['_embedded']['uasgs'][i]['id_municipio'] in id_):	
+			h = {key:value for (key, value) in uasg_json['_embedded']['uasgs'][i].items() if (key in atributos_validos) }
+			h.update({key:None for key in atributos_validos if key not in uasg_json['_embedded']['uasgs'][i].keys()})
+			resultset.append(h)
+
+
 		
 	offset = offset + 500
+
+
+
 
 print(len(resultset))
 
 print("Deu Certo")
 
-#Helped 
+
+db.bulk_insert_uasg(resultset, atributos_validos)
+		
+		
 #https://www.saltycrane.com/blog/2008/01/how-to-use-args-and-kwargs-in-python/
-i = 0
-for uasg in resultset:
-	if i % 500 == 0:  
-		print("Inseriu: ", i)
-	atributos_validos = ['ativo', 'cep', 'ddd', 'endereco', 'fax', 'id', 'id_municipio', 
-						'id_orgao', 'nome', 'nome_mnemonico', 'ramal', 'ramal2', 'sigla_uf', 
-						'telefone', 'telefone2', 'unidade_cadastradora']
-
-	h = {key:value for (key,value) in uasg.items() if key in atributos_validos}
-	db.insert_uasg(**h)
-	i = i + 1
-
-		
-		
-		
