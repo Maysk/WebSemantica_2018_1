@@ -23,11 +23,17 @@ error = True
 db.setup()
 
 error = aux.dump_uasgs() and error
+error = aux.dump_licitacoes() and error
+error = aux.dump_modalidades_licitacoes() and error
+error = aux.dump_orgaos() and error
 
+
+print("\n\n")
 if(error):
-	print("Tudo correu bem.")
+	print("Tudo correu bem. Todas as operações feitas podem ser consultadas no log.")
 else:
 	print("Ocorreu algum error. Por favor, cheque o ultimo log gerado.")
+print("\n\n")
 
 logger.info("*************************************************")
 logger.info("Terminou operação em {}".format(datetime.now()))

@@ -93,7 +93,7 @@ def tabela_ja_criada(nome_da_tabela):
 		return existe_tabela
 
 def insere_tabela_povoada(nome_da_tabela):
-	sql_command = """insert into tabelas_ja_povoadas values %s;"""
+	sql_command = """insert into tabelas_ja_povoadas values (%s);"""
 	try:
 		params = config()
 		conn = psycopg2.connect(**params)

@@ -35,7 +35,7 @@ CREATE TABLE licitacoes(
 				data_publicacao text,
 				endereco_entrega_edital text,
 				funcao_responsavel text,
-				identificador integer,
+				identificador text,
 				informacoes_gerais text,
 				modalidade integer, 
 				nome_responsavel text,
