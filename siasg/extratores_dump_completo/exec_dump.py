@@ -1,17 +1,34 @@
 import dump_exec_aux as aux
+import database as db
+import logging
+from datetime import datetime
 
+#Tirado de https://docs.python.org/3/howto/logging-cookbook.html
+# create logger with 'spam_application'
+logger = logging.getLogger('MainExtractor')
+logger.setLevel(logging.DEBUG)
+# create file handler which logs even debug messages
+fh = logging.FileHandler('logs\\logging_file_{}.log'.format(datetime.now().strftime("%Y_%m_%d_%H_%M_%S")))
+fh.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
-url_uasgs = "http://compras.dados.gov.br/licitacoes/v1/uasgs.json?offset={}"
+logger.info("*************************************************")
+logger.info("Iniciando operação em {}".format(datetime.now()))
+logger.info("*************************************************")
 
-elemento_json = "uasgs"
+error = True
 
-nome_da_tabela = "uasgs"
+db.setup()
 
-atributos_uasgs = ['ativo', 'cep', 'ddd', 'endereco', 'fax', 'id', 'id_municipio', 
-							'id_orgao', 'nome', 'nome_mnemonico', 'ramal', 'ramal2', 'sigla_uf', 
+error = aux.dump_uasgs() and error
 
-							'telefone', 'telefone2', 'unidade_cadastradora']
+if(error):
+	print("Tudo correu bem.")
+else:
+	print("Ocorreu algum error. Por favor, cheque o ultimo log gerado.")
 
-
-aux.dump_tabela(url_uasgs, elemento_json, nome_da_tabela, atributos_uasgs)
-
+logger.info("*************************************************")
+logger.info("Terminou operação em {}".format(datetime.now()))
+logger.info("*************************************************")

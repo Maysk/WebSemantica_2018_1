@@ -1,0 +1,9 @@
+MainExtractor - INFO - *************************************************
+MainExtractor - INFO - Iniciando operação em 2018-06-20 11:37:35.648380
+MainExtractor - INFO - *************************************************
+MainExtractor.Database - INFO - Tabela 'tabelas_ja_povoadas' já foi criada anteriormente;
+MainExtractor.ExecAux - INFO - Iniciou Funcao DumpTabela: uasgs
+MainExtractor.ExecAux - INFO - Tabela uasgs não existe. Sugestão: Crie a tabela uasgs
+MainExtractor - INFO - *************************************************
+MainExtractor - INFO - Terminou operação em 2018-06-20 11:37:35.700383
+MainExtractor - INFO - *************************************************
