@@ -28,6 +28,17 @@ error = aux.dump_modalidades_licitacoes() and error
 error = aux.dump_orgaos() and error
 
 
+error = aux.dump_contratos() and error
+
+
+error = aux.dump_cnaes() and error
+error = aux.dump_municipios() and error
+error = aux.dump_ramos_negocio() and error
+error = aux.dump_portes_empresa() and error
+error = aux.dump_linhas_fornecimento() and error
+
+
+
 print("\n\n")
 if(error):
 	print("Tudo correu bem. Todas as operações feitas podem ser consultadas no log.")

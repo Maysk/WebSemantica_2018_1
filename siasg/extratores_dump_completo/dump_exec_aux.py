@@ -82,6 +82,10 @@ def dump_tabela(url_entidade, elemento_json, nome_da_tabela, atributos_validos):
 
 
 
+################################################################
+###################### MODULO LICITACOES #######################
+################################################################
+
 def dump_uasgs():
 	url_ = "http://compras.dados.gov.br/licitacoes/v1/uasgs.json?offset={}"
 
@@ -109,6 +113,7 @@ def dump_orgaos():
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
+
 def dump_licitacoes():
 	url_ = "http://compras.dados.gov.br/licitacoes/v1/licitacoes.json?offset={}"
 
@@ -131,5 +136,88 @@ def dump_modalidades_licitacoes():
 	nome_da_tabela = "modalidades_licitacao"
 
 	atributos_considerados = ['codigo', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+
+
+
+
+
+################################################################
+###################### MODULO CONTRATOS ########################
+################################################################
+
+def dump_contratos():
+	url_ = "http://compras.dados.gov.br/contratos/v1/contratos.json?offset={}"
+
+	elemento_json = "contratos"
+
+	nome_da_tabela = "contratos"
+
+	atributos_considerados = ['cnpj_contratada', 'codigo_contrato', 'cpfContratada', 'data_assinatura', 'data_inicio_vigencia', 'data_termino_vigencia', 'fundamento_legal', 'identificador', 'licitacao_associada', 'modalidade_licitacao', 'numero', 'numero_aditivo', 'numero_aviso_licitacao', 'numero_processo', 'objeto', 'origem_licitacao', 'uasg', 'valor_inicial']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+################################################################
+###################### MODULO FORNECEDORES #####################
+################################################################
+
+def dump_cnaes():
+	url_ = "http://compras.dados.gov.br/fornecedores/v1/cnaes.json?offset={}"
+
+	elemento_json = "cnaes"
+
+	nome_da_tabela = "cnaes"
+
+	atributos_considerados = ['id', 'descricao', 'codigo_longo']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+def dump_municipios():
+	url_ = "http://compras.dados.gov.br/fornecedores/v1/municipios.json?offset={}"
+
+	elemento_json = "municipios"
+
+	nome_da_tabela = "municipios"
+
+	atributos_considerados = ['ativo', 'codigo_ibge', 'id', 'nome', 'nome_uf', 'sigla_uf']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_ramos_negocio():
+	url_ = "http://compras.dados.gov.br/fornecedores/v1/ramos_negocio.json?offset={}"
+
+	elemento_json = "ramosNegocio"
+
+	nome_da_tabela = "ramos_negocio"
+
+	atributos_considerados = ['ativo', 'descricao', 'id']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_portes_empresa():
+	url_ = "http://compras.dados.gov.br/fornecedores/v1/portes_empresa.json?offset={}"
+
+	elemento_json = "portesEmpresa"
+
+	nome_da_tabela = "portes_empresa"
+
+	atributos_considerados = ['descricao', 'id']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+def dump_linhas_fornecimento():
+	url_ = "http://compras.dados.gov.br/fornecedores/v1/linhas_fornecimento.json?offset={}"
+
+	elemento_json = "linhasFornecimento"
+
+	nome_da_tabela = "linhas_fornecimento"
+
+	atributos_considerados = ['ativo', 'id', 'tipo', 'codigo_material', 'codigo_servico']
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)

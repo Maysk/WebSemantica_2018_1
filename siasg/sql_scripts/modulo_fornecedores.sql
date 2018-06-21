@@ -42,8 +42,8 @@ CREATE TABLE fornecedores(
 CREATE TABLE linhas_fornecimento(
 				id integer,
 				ativo boolean,
-				codigo_material integer,	
-				codigo_servico integer,
+				codigo_material text,	
+				codigo_servico text,
 				tipo text
 			);
 
