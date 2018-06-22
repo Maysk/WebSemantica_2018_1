@@ -86,6 +86,46 @@ def dump_tabela(url_entidade, elemento_json, nome_da_tabela, atributos_validos):
 ###################### MODULO LICITACOES #######################
 ################################################################
 
+def dump_irps():
+	url_ = "http://compras.dados.gov.br/licitacoes/v1/irps.json?offset={}"
+
+	elemento_json = "irps"
+
+	nome_da_tabela = "irps"
+
+	atributos_considerados = ['cpf_responsavel', 'data_provavel_licitacao',	'justificativa_modalidade', 'modalidade_licitacao',		
+								'municipio', 'nome_responsavel', 'numero_irp', 'objeto', 'orgao', 'prazo_validade',	'sigla_uf',
+								'situacao', 'tipo_licitacao', 'uasg']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+def dump_precos_praticados()
+	url_ = "http://compras.dados.gov.br/licitacoes/v1/precos_praticados.json?offset={}"
+
+	elemento_json = "precos_praticados"
+
+	nome_da_tabela = "precos_praticados"
+
+	atributos_considerados = ['id_licitacao', 'modalidade',	'numero_aviso', 'numero_itens',	'objeto',
+								'situacao', 'uasg', 'valor_total'	]
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+def dump_registros_preco()
+	url_ = "http://compras.dados.gov.br/licitacoes/v1/registros_preco.json?offset={}"
+
+	elemento_json = "registros_preco"
+
+	nome_da_tabela = "registros_preco"
+
+	atributos_considerados = [ 'data_assinatura', 'data_fim_validade', 'data_inicio_validade', 'id_licitacao', 'modalidade',
+								'numero_aviso', 'numero_itens',	'situacao', 'uasg',	'valor_renegociado', 'valor_total' ]
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
 def dump_uasgs():
 	url_ = "http://compras.dados.gov.br/licitacoes/v1/uasgs.json?offset={}"
 
@@ -95,9 +135,7 @@ def dump_uasgs():
 
 	atributos_considerados = ['ativo', 'cep', 'ddd', 'endereco', 'fax', 'id', 'id_municipio', 
 								'id_orgao', 'nome', 'nome_mnemonico', 'ramal', 'ramal2', 'sigla_uf', 
-
 								'telefone', 'telefone2', 'unidade_cadastradora']
-
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
