@@ -6,7 +6,7 @@
 CREATE TABLE classes (
 	codigo       integer,
 	codigo_grupo integer,
-	descricao    text,
+	descricao    text
 );
 
 --grupos	
@@ -14,7 +14,7 @@ CREATE TABLE classes (
 
 CREATE TABLE grupos (
 	codigo    integer,
-	descricao text,
+	descricao text
 );
 
 --pdms	
@@ -37,6 +37,6 @@ CREATE TABLE materiais (
 	id_grupo    integer,
 	id_pdm      text,
 	status      boolean,
-	sustentavel boolean,
+	sustentavel boolean
 );
 

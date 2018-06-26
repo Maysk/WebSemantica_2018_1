@@ -4,7 +4,7 @@ import os
 import database as db
 import logging
 
-testing = True
+testing = False
 
 logger = logging.getLogger("MainExtractor.ExecAux")
 
@@ -262,6 +262,10 @@ def dump_linhas_fornecimento():
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
 
+################################################################
+################# MODULO COMPRAS SEM LICITACAO #################
+################################################################
+
 
 def dump_compras_sem_licitacao():
 	url_ = "http://compras.dados.gov.br/compraSemLicitacao/v1/compras_slicitacao.json?offset={}"
@@ -292,3 +296,56 @@ def dump_itens_compras_sem_licitacao():
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
+
+################################################################
+####################### MODULO MATERIAIS #######################
+################################################################
+
+def dump_classes():
+	url_ = "http://compras.dados.gov.br/materiais/v1/classes.json?offset={}"
+
+	elemento_json = "classes"
+
+	nome_da_tabela = "classes"
+
+	atributos_considerados = ['codigo', 'codigo_grupo', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_grupos():
+	url_ = "http://compras.dados.gov.br/materiais/v1/grupos.json?offset={}"
+
+	elemento_json = "grupos"
+
+	nome_da_tabela = "grupos"
+
+	atributos_considerados = ['codigo', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_pdms():
+	url_ = "http://compras.dados.gov.br/materiais/v1/pdms.json?offset={}"
+
+	elemento_json = "pdms"
+
+	nome_da_tabela = "pdms"
+
+	atributos_considerados = ['codigo', 'codigo_classe', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_materiais():
+	url_ = "http://compras.dados.gov.br/materiais/v1/materiais.json?offset={}"
+
+	elemento_json = "materiais"
+
+	nome_da_tabela = "materiais"
+
+	atributos_considerados = 	['codigo', 'descricao', 'id_classe', 'id_grupo', 'id_pdm', 'status', 'sustentavel']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+################################################################
+######################## MODULO SERVICOS #######################
+################################################################
