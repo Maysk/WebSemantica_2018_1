@@ -7,24 +7,30 @@
 
 CREATE TABLE compras_sem_licitacao
 (
-  id integer,
-  co_orgao text,
-  co_uasg integer,
-  co_modalidade_licitacao integer,
-  nu_inciso text,
-  nu_processo text,
-  vr_estimado real,
-  ds_fundamento_legal text,
-  ds_justificativa text,
-  "dtDeclaracaoDispensa" time with time zone,
-  no_responsavel_decl_disp text,
-  no_cargo_resp_decl_disp text,
-  "dtRatificacao" time with time zone,
-  no_responsavel_ratificacao text,
-  no_cargo_resp_ratificacao text,
-  "dtPublicacao" time with time zone,
-  _links text,
-  itens integer
+    co_modalidade_licitacao integer,
+    co_orgao text,
+    co_uasg integer,
+    
+    ds_fundamento_legal text,
+    ds_justificativa text,
+    ds_lei text,
+    ds_objeto_licitacao text,
+    
+    dtPublicacao text,
+    dtRatificacao text,
+    dtDeclaracaoDispensa text,
+    
+    no_cargo_resp_decl_disp text,
+    no_cargo_resp_ratificacao text,
+    no_responsavel_decl_disp text,
+    no_responsavel_ratificacao text,
+    
+    nu_inciso text,
+    nu_processo text,
+    nu_aviso_licitacao text,
+    
+    qt_total_item text,
+    vr_estimado real
 )
 
 --itens_compras_sem_licitacao	
@@ -34,67 +40,30 @@ CREATE TABLE compras_sem_licitacao
 
 CREATE TABLE itens_compras_sem_licitacao
 (
-  id integer,
-  co_modalidade_licitacao integer,
-  nu_inciso text,
-  nu_processo text,
-  vr_estimado real,
-  ds_fundamento_legal text,
-  ds_justificativa text,
-  "dtDeclaracaoDispensa" time with time zone,
-  no_responsavel_decl_disp text,
-  no_cargo_resp_decl_disp text,
-  _links integer,
-  itens integer,
-  co_orgao text,
-  co_uasg integer,
-  "dtRatificacao" time with time zone,
-  no_responsavel_ratificacao text,
-  no_cargo_resp_ratificacao text,
-  "dtPublicacao" time with time zone
-)
+    co_modalidade_licitacao integer,
+    co_orgao text,
+    co_uasg integer,
 
---tabelas relacionadas
--- Table: _links
-CREATE TABLE _links
-(
-  id integer,
-  self text,
-  title text
-)
+    ds_fundamento_legal text,
+    ds_justificativa text,
+    ds_lei text,
+    ds_objeto_licitacao text,
 
--- Table: itens
 
-CREATE TABLE itens
-(
-  id integer,
-  href text,
-  title text
-)
+    dtDeclaracaoDispensa text,
+    dtRatificacao text,
+    dtPublicacao text,
 
--- Table: modalidade_licitacao
+    no_responsavel_decl_disp text,
+    no_cargo_resp_decl_disp text,
+    no_responsavel_ratificacao text,
+    no_cargo_resp_ratificacao text,
 
-CREATE TABLE modalidade_licitacao
-(
-  id integer,
-  href text,
-  title text
-)
+    nu_inciso text,
+    nu_processo text,
+    nu_aviso_licitacao text,
 
--- Table: orgao
+    qt_total_item text,
+    vr_estimado real
 
-CREATE TABLE orgao
-(
-  id text,
-  title text,
-  href text
-)
-
--- Table: uasg
-
-CREATE TABLE uasg
-(
-  id integer,
-  href text,
-  title text
 )

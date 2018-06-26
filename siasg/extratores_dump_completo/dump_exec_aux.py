@@ -4,7 +4,7 @@ import os
 import database as db
 import logging
 
-testing = False
+testing = True
 
 logger = logging.getLogger("MainExtractor.ExecAux")
 
@@ -26,7 +26,7 @@ def dump_tabela(url_entidade, elemento_json, nome_da_tabela, atributos_validos):
 		json_ = req.json()
 
 		if testing:
-			limit = 500
+			limit = 1000
 		else:
 			limit = json_['count']
 
@@ -260,3 +260,35 @@ def dump_linhas_fornecimento():
 	atributos_considerados = ['ativo', 'id', 'tipo', 'codigo_material', 'codigo_servico']
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+
+def dump_compras_sem_licitacao():
+	url_ = "http://compras.dados.gov.br/compraSemLicitacao/v1/compras_slicitacao.json?offset={}"
+
+	elemento_json = "compras"
+
+	nome_da_tabela = "compras_sem_licitacao"
+
+	atributos_considerados = ['co_modalidade_licitacao', 'co_orgao', 'co_uasg', 'ds_fundamento_legal', 'ds_justificativa', 
+							'ds_lei', 'ds_objeto_licitacao', 'dtPublicacao', 'dtRatificacao', 'dtDeclaracaoDispensa', 
+							'no_cargo_resp_decl_disp', 'no_cargo_resp_ratificacao', 'no_responsavel_decl_disp', 'no_responsavel_ratificacao', 
+							'nu_inciso', 'nu_processo', 'nu_aviso_licitacao', 'qt_total_item', 'vr_estimado']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+def dump_itens_compras_sem_licitacao():
+	url_ = "http://compras.dados.gov.br/compraSemLicitacao/v1/itens_compras_slicitacao.json?offset={}"
+
+	elemento_json = "compras"
+
+	nome_da_tabela = "itens_compras_sem_licitacao"
+
+	atributos_considerados = ['co_modalidade_licitacao', 'co_orgao', 'co_uasg', 'ds_fundamento_legal', 'ds_justificativa', 
+							'ds_lei', 'ds_objeto_licitacao', 'dtPublicacao', 'dtRatificacao', 'dtDeclaracaoDispensa', 
+							'no_cargo_resp_decl_disp', 'no_cargo_resp_ratificacao', 'no_responsavel_decl_disp', 'no_responsavel_ratificacao', 
+							'nu_inciso', 'nu_processo', 'nu_aviso_licitacao', 'qt_total_item', 'vr_estimado']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
