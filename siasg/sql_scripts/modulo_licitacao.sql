@@ -76,7 +76,7 @@ CREATE TABLE orgaos(
 --	Link: http://compras.dados.gov.br/docs/licitacoes/v1/precos_praticados.html
 
 CREATE TABLE precos_praticados(
-				id_licitacao integer,
+				id_licitacao text,
 				modalidade integer,
 				numero_aviso integer,
 				numero_itens integer,
@@ -95,7 +95,7 @@ CREATE TABLE registros_preco(
 				data_assinatura text,
 				data_fim_validade text,
 				data_inicio_validade text,
-				id_licitacao integer,
+				id_licitacao text,
 				modalidade integer,
 				numero_aviso integer,
 				numero_itens integer,
@@ -146,7 +146,7 @@ CREATE TABLE rdcs(
 				endereco_entrega_edital text,
 				forma_de_realizacao_licitacao text,
 				funcao_responsavel text,
-				identificador integer,
+				identificador text,
 				informacoes_gerais text, 
 				modalidade integer,
 				nome_responsavel text,

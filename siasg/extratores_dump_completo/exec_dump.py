@@ -31,7 +31,7 @@ error = aux.dump_orgaos() and error
 error = aux.dump_irps() and error
 error = aux.dump_precos_praticados() and error
 error = aux.dump_registros_preco() and error
-
+#TODO rdcs
 
 error = aux.dump_contratos() and error
 
