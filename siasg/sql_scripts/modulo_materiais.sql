@@ -13,28 +13,28 @@
 --	Link: http://compras.dados.gov.br/docs/materiais/v1/materiais.html
 
 CREATE TABLE classes (
-codigo integer,
+codigo       integer,
 codigo_grupo integer,
-descricao text,
+descricao    text,
 );
 
 CREATE TABLE grupos (
-codigo integer,
+codigo    integer,
 descricao text,
 );
 
 CREATE TABLE pdms (
-codigo integer,
+codigo        integer,
 codigo_classe integer,
-descricao text
+descricao     text
 );
 
 CREATE TABLE materiais (
-codigo integer,
-descricao text,
-id_classe integer,
-id_grupo integer,
-id_pdm integer,
-status boolean,
+codigo      integer,
+descricao   text,
+id_classe   integer,
+id_grupo    integer,
+id_pdm      integer,
+status      boolean,
 sustentavel boolean,
 );
