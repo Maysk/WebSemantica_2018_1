@@ -103,7 +103,7 @@ def dump_irps():
 def dump_precos_praticados():
 	url_ = "http://compras.dados.gov.br/licitacoes/v1/precos_praticados.json?offset={}"
 
-	elemento_json = "precos_praticados"
+	elemento_json = "precosPraticados"
 
 	nome_da_tabela = "precos_praticados"
 
@@ -116,12 +116,13 @@ def dump_precos_praticados():
 def dump_registros_preco():
 	url_ = "http://compras.dados.gov.br/licitacoes/v1/registros_preco.json?offset={}"
 
-	elemento_json = "registros_preco"
+	elemento_json = "registrosPreco"
 
 	nome_da_tabela = "registros_preco"
 
-	atributos_considerados = [ 'data_assinatura', 'data_fim_validade', 'data_inicio_validade', 'id_licitacao', 'modalidade',
-								'numero_aviso', 'numero_itens',	'situacao', 'uasg',	'valor_renegociado', 'valor_total' ]
+	atributos_considerados = [ 'data_assinatura', 'data_fim_validade', 'data_inicio_validade', 'id_licitacao', 
+								'modalidade', 'numero_aviso', 'numero_itens', 'situacao', 'uasg', 
+								'valor_renegociado', 'valor_total' ]
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
