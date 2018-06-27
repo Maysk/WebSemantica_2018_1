@@ -3,7 +3,7 @@
 --secoes	
 --	Link: http://compras.dados.gov.br/docs/servicos/v1/secoes.html
 
-CREATE TABLE Secoes(
+CREATE TABLE secoes_servicos(
 	codigo INT,
 	descricao TEXT
 );
@@ -11,7 +11,7 @@ CREATE TABLE Secoes(
 --divisoes	
 --	Link: http://compras.dados.gov.br/docs/servicos/v1/divisoes.html
 
-CREATE TABLE Divisoes(
+CREATE TABLE divisoes_servicos(
 	codigo INT,
 	codigo_secao INT,
 	descricao TEXT
@@ -20,7 +20,7 @@ CREATE TABLE Divisoes(
 --grupos	
 --	Link: http://compras.dados.gov.br/docs/servicos/v1/grupos.html
 
-CREATE TABLE Grupos(
+CREATE TABLE grupos_servicos(
 	codigo INT,
 	codigo_divisao INT,
 	descricao TEXT
@@ -29,7 +29,7 @@ CREATE TABLE Grupos(
 --classes	
 --	Link: http://compras.dados.gov.br/docs/servicos/v1/classes.html
 
-CREATE TABLE Classes(
+CREATE TABLE classes_servicos(
 	codigo INT,
 	codigo_grupo INT,
 	descricao TEXT
@@ -38,7 +38,7 @@ CREATE TABLE Classes(
 --subclasses	
 --	Link: http://compras.dados.gov.br/docs/servicos/v1/subclasses.html
 
-CREATE TABLE Subclasses(
+CREATE TABLE subclasses_servicos(
 	codigo INT,
 	codigo_classe INT,
 	descricao TEXT
@@ -47,13 +47,14 @@ CREATE TABLE Subclasses(
 --servicos	
 --	Link: http://compras.dados.gov.br/docs/servicos/v1/servicos.html
 
-CREATE TABLE Servicos(
+CREATE TABLE servicos(
 	codigo INT,
 	codigo_classe INT,
 	codigo_divisao INT,
 	codigo_grupo INT,
 	codigo_secao INT,
 	codigo_subclasse INT,
+	cpc INT,
 	descricao TEXT,
 	unidade_medida TEXT
 );

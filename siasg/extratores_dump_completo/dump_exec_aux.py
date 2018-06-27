@@ -349,3 +349,71 @@ def dump_materiais():
 ################################################################
 ######################## MODULO SERVICOS #######################
 ################################################################
+
+def dump_secoes_servicos():
+	url_ = "http://compras.dados.gov.br/servicos/v1/secoes.json?offset={}"
+
+	elemento_json = "secoes"
+
+	nome_da_tabela = "secoes_servicos"
+
+	atributos_considerados = ['codigo', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_divisoes_servicos():
+	url_ = "http://compras.dados.gov.br/servicos/v1/divisoes.json?offset={}"
+
+	elemento_json = "divisoes"
+
+	nome_da_tabela = "divisoes_servicos"
+
+	atributos_considerados = ['codigo', 'codigo_secao', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_grupos_servicos():
+	url_ = "http://compras.dados.gov.br/servicos/v1/grupos.json?offset={}"
+
+	elemento_json = "grupos"
+
+	nome_da_tabela = "grupos_servicos"
+
+	atributos_considerados = ['codigo', 'codigo_divisao', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_classes_servicos():
+	url_ = "http://compras.dados.gov.br/materiais/v1/classes.json?offset={}"
+
+	elemento_json = "classes"
+
+	nome_da_tabela = "classes_servicos"
+
+	atributos_considerados = ['codigo', 'codigo_grupo', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+def dump_subclasses_servicos():
+	url_ = "http://compras.dados.gov.br/servicos/v1/subclasses.json?offset={}"
+
+	elemento_json = "subclasses"
+
+	nome_da_tabela = "subclasses_servicos"
+
+	atributos_considerados = ['codigo', 'codigo_classe', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+def dump_servicos():
+	url_ = "http://compras.dados.gov.br/servicos/v1/servicos.json?offset={}"
+
+	elemento_json = "servicos"
+
+	nome_da_tabela = "servicos"
+
+	atributos_considerados = ['codigo', 'codigo_classe', 'codigo_divisao', 'codigo_grupo', 
+							'codigo_secao', 'codigo_subclasse', 'cpc', 'descricao', 'unidade_medida']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)

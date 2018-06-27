@@ -31,10 +31,19 @@ error = aux.dump_orgaos() and error
 error = aux.dump_irps() and error
 error = aux.dump_precos_praticados() and error
 error = aux.dump_registros_preco() and error
+
 error = aux.dump_classes() and error
 error = aux.dump_grupos() and error
 error = aux.dump_pdms() and error
 error = aux.dump_materiais() and error
+
+
+error = aux.dump_secoes_servicos() and error
+error = aux.dump_divisoes_servicos() and error
+error = aux.dump_grupos_servicos() and error
+error = aux.dump_classes_servicos() and error
+error = aux.dump_subclasses_servicos() and error
+error = aux.dump_servicos() and error
 
 
 #error = aux.dump_compras_sem_licitacao() and error
