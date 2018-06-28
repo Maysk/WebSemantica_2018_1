@@ -181,9 +181,6 @@ def dump_modalidades_licitacoes():
 
 
 
-
-
-
 ################################################################
 ###################### MODULO CONTRATOS ########################
 ################################################################
@@ -260,6 +257,22 @@ def dump_linhas_fornecimento():
 	atributos_considerados = ['ativo', 'id', 'tipo', 'codigo_material', 'codigo_servico']
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+def dump_fornecedores():
+	url_ = "http://compras.dados.gov.br/fornecedores/v1/fornecedores.json?offset={}"
+
+	elemento_json = "fornecedores"
+
+	nome_da_tabela = "fornecedores"
+
+	atributos_considerados = ['ativo', 'cnpj', 'cpf', 'habilitado_licitar', 'id', 'id_cnae', 
+							'id_cnae2','id_municipio', 'id_natureza_juridica', 'id_porte_empresa',
+							'id_ramo_negocio integer', 'id_unidade_cadastradora', 'nome',
+							'recadastrado', 'uf']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
 
 
 ################################################################
