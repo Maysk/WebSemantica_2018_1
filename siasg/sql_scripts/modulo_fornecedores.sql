@@ -20,19 +20,20 @@ CREATE TABLE cnaes (
 --	Link: http://compras.dados.gov.br/docs/fornecedores/v1/fornecedores.html
 
 CREATE TABLE fornecedores(
-				id integer,
-				nome text,
 				ativo boolean, 
 				cnpj text, 
 				cpf text, 
 				habilitado_licitar boolean,
+				id integer,
 				id_cnae integer,
 				id_cnae2 integer,
 				id_municipio integer,
 				id_natureza_juridica integer,
 				id_porte_empresa integer,
-				id_unidade_cadastrada integer,
-				recadastradora boolean,
+				id_ramo_negocio integer,
+				id_unidade_cadastradora integer,
+				nome text,
+				recadastrado boolean,
 				uf text
 			);
 
