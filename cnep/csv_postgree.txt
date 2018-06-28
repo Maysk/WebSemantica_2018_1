@@ -1,0 +1,11 @@
+﻿=================================
+Especificações de Importação .CSV - Postgree
+=================================
+
+1. Abra o .CSV em algum editor de texto / IDE (i.e: Sublime Text Editor, Notepad Editor);
+2. Converta a codificação para UTF-8;
+3. No Postgree execute o SQL 
+	COPY nomedatabela FROM 'C:\Users\usuario\diretorio\nomedoarquivo.csv' CSV HEADER delimiter ';';
+	
+	Obs: • A tabela deve ter sido criada previamente contendo a mesma quantidadde de colunas do arquivo .CSV
+		 • Neste exemplo utilizou-se o delimitador ; para separação das colunas, contudo, pode ocorrer deste ser uma vírgula.
