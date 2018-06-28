@@ -268,10 +268,23 @@ def dump_fornecedores():
 
 	atributos_considerados = ['ativo', 'cnpj', 'cpf', 'habilitado_licitar', 'id', 'id_cnae', 
 							'id_cnae2','id_municipio', 'id_natureza_juridica', 'id_porte_empresa',
-							'id_ramo_negocio integer', 'id_unidade_cadastradora', 'nome',
+							'id_ramo_negocio', 'id_unidade_cadastradora', 'nome',
 							'recadastrado', 'uf']
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+def dump_ocorrencias_fornecedores():
+	url_ = "http://compras.dados.gov.br/fornecedores/v1/ocorrencias_fornecedores.json?offset={}"
+
+	elemento_json = "ocorrenciasFornecedores"
+
+	nome_da_tabela = "ocorrencias_fornecedores"
+
+	atributos_considerados = ['id', 'cnpj', 'cpf', 'id_orgao', 'id_tipo_ocorrencia', 'id_unidade_cadastradora', 'numero_processo', 'tipo_pessoa']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
 
 
 

@@ -117,3 +117,15 @@ CREATE TABLE tipos_ocorrencia(
 			id integer,
 			descricao text
 		);
+
+INSERT INTO tipos_ocorrencia (id, descricao) 
+VALUES 	(6, 'Inativação a Pedido do Fornecedor'), 
+	(8, 'Legado'), 
+	(1, 'Advertência - Lei nº 8666/93, art. 87, inc. I'),
+	(2, 'Multa - Lei nº 8666/93, art. 87, inc. II'),
+	(3, 'Suspensão Temporária - Lei nº 8666/93, art. 87, inc. III'),
+	(10, 'Dinâmica'),
+	(4, 'Declaração de Inidoneidade - Lei nº 8666/93, art. 87, inc. IV'),
+	(5, 'Impedimento de Licitar e Contratar - Lei nº 10.520/02, art. 7º'),
+	(9, 'Reativação a Pedido do Fornecedor'),
+	(7, 'Outros Tipos de Ocorrência');

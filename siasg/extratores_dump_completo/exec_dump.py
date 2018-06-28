@@ -59,6 +59,7 @@ error = aux.dump_ramos_negocio() and error
 error = aux.dump_portes_empresa() and error
 error = aux.dump_linhas_fornecimento() and error
 error = aux.dump_fornecedores() and error
+error = aux.dump_ocorrencias_fornecedores() and error
 
 
 
