@@ -1,1 +1,35 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ceis_cnep/ontology/> .
 
+
+
+<SancionadoPF> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT cpf_ou_cnpj, nome_informado_pelo_sancionador
+				FROM ceis
+				WHERE tipo_pessoa like 'F'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:PessoaFisica, ardo:SancionadoPF, ardo:Sancionado;
+			rr:template "http://www.arida.com/ceis_cnep/resources/PessoaFisica/{cpf_ou_cnpj}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cpf;
+			rr:objectMap [rr:column '"cpf_ou_cnpj"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_informado;
+			rr:objectMap [rr:column '"nome_informado_pelo_sancionador"']
+		] 
+	. 
