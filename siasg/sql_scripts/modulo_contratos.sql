@@ -31,6 +31,13 @@ CREATE TABLE contratos(
 
 --tipos_contrato	
 --	Link: http://compras.dados.gov.br/docs/contratos/v1/tipos_contrato.html
+CREATE TABLE tipos_contrato(
+		codigo int,
+		descricao text
+	);
+
+INSERT INTO tipos_contrato (codigo, descricao) VALUES ('50','CONTRATO'), ('51','CREDENCIAMENTO'), ('52','COMODATO'), ('53','ARRENDAMENTO'), ('54','CONCESSÃO'), ('55','TERMO ADITIVO'), ('56','TERMO DE ADESÃO'), ('57','CONVÊNIO'), ('60','TERMO DE APOSTILAMENTO');
+
 
 --cronogramas	
 --	Link: http://compras.dados.gov.br/docs/contratos/v1/cronogramas.html
