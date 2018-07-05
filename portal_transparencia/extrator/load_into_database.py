@@ -5,8 +5,8 @@ from config import config
 
 def load_csv_into_table(csv_path, table_name):
 	conn = None
-	sql = "COPY {} FROM '{}' CSV HEADER delimiter ';';".format(table_name, csv_path)
-	print(sql)
+	sql = "COPY {} FROM '{}' CSV HEADER delimiter ';' ENCODING 'WINDOWS1252';".format(table_name, csv_path)
+	#print(sql)
 	try:
 		params = config()
 		conn = psycopg2.connect(**params)
@@ -18,7 +18,7 @@ def load_csv_into_table(csv_path, table_name):
 		cur.close()
 	
 	except(Exception, psycopg2.DatabaseError) as error:
-		print("ERROR: ", error)
+		print("csv_path", csv_path,"   -  -   ERROR: ", error)
 	
 	finally:
 		if conn is not None:
@@ -28,22 +28,22 @@ def load_csv_into_table(csv_path, table_name):
 
 
 
-files_names = os.listdir('dados/')
+files_names = os.listdir('working_area/')
+#print(files_names)
+for file_name in files_names:
+	os.rename('working_area/' + file_name, 'working_area/' + file_name.replace('ç','c').replace('ã','a'))
 
-for name in zipfile.ZipFile("dados/"+files_names[0]).namelist():
-    print('Listing zip files: %s' % name)
-
-#f = zipfile.ZipFile('dados/' + files_names[0])
-#f.extractall('working_area')
-#f.close()
-
-#base_path = os.getcwd()
-
-#arquivos_extraidos = os.listdir('working_area/')
-
-#load_csv_into_table(base_path + '\\working_area\\' + arquivos_extraidos[0], 'item_licitacao')
-
-
-
-#for fname in files_names:
+base_path = os.getcwd()
+files_names = os.listdir('working_area/')
+print(len(files_names))
+i = 0
+while i < len(files_names):
+	print(i)
+	load_csv_into_table(base_path + '\\working_area\\' + files_names[i], 'item_licitacao')
+	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i+1], 'licitacao')
+	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i+2], 'participante_licitacao')	
+	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i], 'contratos')
+	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i+1], 'item_compra')
+	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i+2], 'termo_aditivo')	
+	i=i+3
 

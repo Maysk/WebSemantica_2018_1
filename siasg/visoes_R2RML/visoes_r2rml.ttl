@@ -1,0 +1,103 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+
+
+<Licitacoes> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Licitacao;
+			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:identificador_licitacao;
+			rr:objectMap [rr:column '"identificador"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:numero_aviso;
+			rr:objectMap [rr:column '"numero_do_aviso"']
+		] 
+	. 
+
+
+
+<Licitacao_Pregao_Eletronico> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+				WHERE modalidade = 5 and tipo_pregao = 'Eletrônico'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Pregao, ardo:PregaoEletronico;
+			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+		] .
+
+
+<Licitacao_Pregao_Presencial> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+				WHERE modalidade = 5 and tipo_pregao = 'Eletrônico'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Pregao, ardo:PregaoPresencial;
+			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+		] .
+
+
+<Contrato> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM contratos
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Contrato;
+			rr:template "http://www.arida.com/siasg/resources/contrato/{identificador}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:originadoDe;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/licitacao/{licitacao_associada}" ]
+		] 
+	.
+
+
+#1;"CONVITE                                           "
+#2;"TOMADA DE PREÇOS                                  "
+#3;"CONCORRÊNCIA                                      "
+#4;"CONCORRÊNCIA INTERNACIONAL                        "
+#5;"PREGÃO                                            "
+#6;"DISPENSA DE LICITAÇÃO                             "
+#7;"INEXIGIBILIDADE DE LICITAÇÃO                      "
+#20;"CONCURSO                                          "
+#22;"TOMADA DE PREÇOS POR TÉCNICA E PREÇO              "
+#33;"CONCORRÊNCIA POR TÉCNICA E PREÇO                  "
+#44;"CONCORRÊNCIA INTERNACIONAL POR TÉCNICA E PREÇO    "
+#99;"RDC"

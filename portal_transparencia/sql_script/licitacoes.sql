@@ -6,7 +6,7 @@ create table item_licitacao(
 	descricao text,
 	quantidade_item text,
 	valor_item text
-)
+);
 
 
 create table licitacao(
@@ -24,8 +24,8 @@ create table licitacao(
 	municipio text, 
 	data_publicacao_dou text,
 	data_abertura text,
-	valor_licitacao text,
-)
+	valor_licitacao text
+);
 
 create table participante_licitacao(
 	numero_licitacao text, 
@@ -34,4 +34,4 @@ create table participante_licitacao(
 	cnpj_participante text, 
 	nome_participante text,
 	flag_vencedor text
-)
+);
