@@ -168,7 +168,7 @@
 			rr:sqlQuery """
 				SELECT *
 				FROM fornecedores
-				WHERE cpnj NOT NULL
+				WHERE cnpj NOT NULL
 			"""
 		];
 	rr:subjectMap
