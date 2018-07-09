@@ -2,170 +2,298 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
-@prefix ardo: <http://www.arida.com/ceis_cnep/ontology/> .
+@prefix ardo_cnep_ceis: <http://www.arida.com/ceis_cnep/ontology/> .
+@prefix ardo_siasg: <http://www.arida.com/siasg/ontology/> .
 
 
-<Person> a rr:TripleMap;
+<PessoaJuridica> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT razao_social FROM cnep"""
+		rr:sqlQuery """SELECT cpf_ou_cnpj AS PJ_ID, nome_fantasia, nome_informado_pelo_sancionador, razao_social FROM cnep 
+		WHERE tipo_pessoa = 'J'"""
 	];
 	rr:subjectMap [
-		rr:class ardo:Pessoa;
-		rr:template "http://www.arida.com/ceis_cnep/ontology/resource/Person/{PERSON_ID}"
+		rr:class ardo_siasg:PessoaJuridica, ardo_cnep_ceis:SancionadoPJ, ardo_cnep_ceis:Sancionado ;
+		rr:template "http://www.arida.com/cnep/resource/Pessoa/{PJ_ID}"
 	];
 	rr:predicateObjectMap 
 	[
-		rr:predicate ardo:razao_social;
+		rr:predicate ardo_siasg:cnpj;
+		rr:objectMap [ rr:column '"pj_id"' ]
+	];
+	rr:predicateObjectMap 
+	[
+		rr:predicate ardo_cnep_ceis:nome_fantasia;
+		rr:objectMap [ rr:column '"nome_fantasia"' ];
+	];
+	rr:predicateObjectMap 
+	[
+		rr:predicate ardo_cnep_ceis:razao_social;
 		rr:objectMap [ rr:column '"razao_social"' ]
-	]. 
-
-<PersonJuridica> a rr:TripleMap;
-	rr:logicalTable [
-		rr:sqlQuery """SELECT cpf_ou_cnpj AS PJ_ID, nome_fantasia FROM cnep WHERE tipo_pessoa = 'J'"""
-	];
-	rr:subjectMap [
-		rr:class ardo:PessoaJuridica;
-		rr:template "http://www.arida.com/ceis_cnep/ontology/resource/PersonJ/{PJ_ID}"
 	];
 	rr:predicateObjectMap 
 	[
-		rr:predicate ardo:cnpj;
-		rr:objectMap [ rr:column '"cpf_ou_cnpj"' ]
-	];
-	rr:predicateObjectMap 
-	[
-		rr:predicate ardo:nome_fantasia;
-		rr:objectMap [ rr:column '"nome_fantasia"' ]
-	]. 
+		rr:predicate ardo_cnep_ceis:nome_informado;
+		rr:objectMap [ rr:column '"nome_informado_pelo_sancionador"' ]
+	] . 
 
-<PersonFisica> a rr:TripleMap;
+<PessoaFisica> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT cpf_ou_cnpj AS PF_ID FROM cnep WHERE tipo_pessoa = 'F'"""
+		rr:sqlQuery """
+			SELECT cpf_ou_cnpj AS PF_ID, nome_informado_pelo_sancionador 
+			FROM cnep WHERE tipo_pessoa = 'F'
+		"""
 	];
 	rr:subjectMap [
-		rr:class ardo:PessoaFisica;
-		rr:template "http://www.arida.com/ceis_cnep/ontology/resource/PersonF/{PF_ID}"
+		rr:class ardo_siasg:PessoaFisica, ardo_cnep_ceis:SancionadoPF, ardo_cnep_ceis:Sancionado;
+		rr:template "http://www.arida.com/cnep/resource/Pessoa/{PF_ID}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:cpf;
-		rr:objectMap [ rr:column '"cpf"']
-	].
+		rr:predicate ardo_siasg:cpf;
+		rr:objectMap [ rr:column '"pf_id"']
+	];
+	rr:predicateObjectMap [
+		rr:predicate ardo_cnep_ceis:nome_informado;
+		rr:objectMap [ rr:column '"nome_informado_pelo_sancionador"']
+	] .
+
 
 <SancaoAplicada> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT data_inicio, data_final, fundamentacao_legal, descricao AS DESC, nome_informado_pelo_sancionador, valor_multa FROM cnep"""
+		rr:sqlQuery """
+			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao, data_inicio, data_final, fundamentacao, descricao_fundamentacao, valor_multa 
+			FROM cnep
+		"""
 	];
 	rr:subjectMap [
-		rr:class ardo:PessoaFisica;
-		rr:template "http://www.arida.com/ceis_cnep/ontology/resource/SancaoAplicada/{DESC}"
+		rr:class ardo_cnep_ceis:SancaoAplicada;
+		rr:template "http://www.arida.com/cnep/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:data_inicio;
+		rr:predicate ardo_cnep_ceis:data_inicio;
 		rr:objectMap [ rr:column '"data_inicio"']
 	];
-		rr:predicateObjectMap [
-		rr:predicate ardo:data_fim;
+	rr:predicateObjectMap [
+		rr:predicate ardo_cnep_ceis:data_final;
 		rr:objectMap [ rr:column '"data_final"']
 	];
-		rr:predicateObjectMap [
-		rr:predicate ardo:fundamentacao_legal;
-		rr:objectMap [ rr:column '"fundamentacao_legal"']
+	rr:predicateObjectMap [
+		rr:predicate ardo_cnep_ceis:fundamentacao_legal;
+		rr:objectMap [ rr:column '"fundamentacao"']
 	];
-		rr:predicateObjectMap [
-		rr:predicate ardo:descricao;
-		rr:objectMap [ rr:column '"descricao"']
+	rr:predicateObjectMap [
+		rr:predicate ardo_cnep_ceis:descricao;
+		rr:objectMap [ rr:column '"descricao_fundamentacao"']
 	];
-		rr:predicateObjectMap [
-		rr:predicate ardo:nome_sancionado_informado;
-		rr:objectMap [ rr:column '"nome_informado_pelo_sancionador"']
-	];
-		rr:predicateObjectMap [
-		rr:predicate ardo:valor_multa;
+	rr:predicateObjectMap [
+		rr:predicate ardo_cnep_ceis:valor_multa;
 		rr:objectMap [ rr:column '"valor_multa"']
-	].
+	] .
 
 <Processo> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT numero_processo AS NUMERO_PROCESSO, data_transito FROM cnep"""
-
+		rr:sqlQuery """
+			SELECT numero_processo, data_transito FROM cnep
+		"""
 	];
 	rr:subjectMap [
-		rr:class ardo:Processo;
-		rr:template "http://owl:withRestrictionsww.arida.com/ceis_cnep/ontology/resource/Processo/{NUMERO_PROCESSO}"
+		rr:class ardo_cnep_ceis:Processo;
+		rr:template "http://www.arida.com/cnep/resource/Processo/{numero_processo}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:numero_processo;
+		rr:predicate ardo_cnep_ceis:numero_processo;
 		rr:objectMap [ rr:column '"numero_processo"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:data_transito_julgado;
+		rr:predicate ardo_cnep_ceis:data_transito_julgado;
 		rr:objectMap [ rr:column '"data_transito"']
 	].
 	
+	
 <Publicacao> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT data_publicacao, local_publicacao, detalhamento AS DETALHAMENTO FROM cnep"""
+		rr:sqlQuery """
+			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao, data_publicacao, publicacao, detalhamento
+			FROM cnep
+		"""
 	];
 	rr:subjectMap [
-		rr:class ardo:Publicacao;
-		rr:template "http://www.arida.com/ceis_cnep/ontology/resource/Publicacao/{DETALHAMENTO}"
+		rr:class ardo_cnep_ceis:Publicacao;
+		rr:template "http://www.arida.com/cnep/resource/Publicacao/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:data_publicacao;
+		rr:predicate ardo_cnep_ceis:data_publicacao;
 		rr:objectMap [ rr:column '"data_publicacao"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:local_publicacao;
+		rr:predicate ardo_cnep_ceis:local_publicacao;
 		rr:objectMap [ rr:column '"publicacao"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:detalhamento;
+		rr:predicate ardo_cnep_ceis:detalhamento;
 		rr:objectMap [ rr:column '"detalhamento"']
 	].
 
 <OrgaoSancionador> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT orgao_sancionador AS ORGAO_SANCIONADOR, complemento_orgao FROM cnep"""
+		rr:sqlQuery """SELECT orgao_sancionador, complemento_orgao FROM cnep"""
 	];
 	rr:subjectMap [
-		rr:class ardo:OrgaoSancionador;
-		rr:template "http://www.arida.com/ceis_cnep/ontology/resource/OrgaoSancionador/{ORGAO_SANCIONADOR}"
+		rr:class ardo_cnep_ceis:OrgaoSancionador;
+		rr:template "http://www.arida.com/cnep/resource/OrgaoSancionador/{orgao_sancionador}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:nome;
+		rr:predicate ardo_cnep_ceis:nome_orgao;
 		rr:objectMap [ rr:column '"orgao_sancionador"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:complemento;
+		rr:predicate ardo_cnep_ceis:complemento;
 		rr:objectMap [ rr:column '"complemento_orgao"']
 	].
 
 <UnidadeFederativa> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT nome_uf AS NOME_UF FROM cnep"""
+		rr:sqlQuery """SELECT uf_orgao_sancionador FROM cnep"""
 	];
 	rr:subjectMap [
-		rr:class ardo:UnidadeFederativa;
-		rr:template "http://www.arida.com/ceis_cnep/ontology/resource/UnidadeFederativa/{NOME_UF}"
+		rr:class ardo_cnep_ceis:UnidadeFederativa;
+		rr:template "http://www.arida.com/siasg/resource/UnidadeFederativa/{uf_orgao_sancionador}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:nome_uf;
-		rr:objectMap [ rr:column '"nome_uf"']
+		rr:predicate ardo_cnep_ceis:sigla_uf;
+		rr:objectMap [ rr:column '"uf_orgao_sancionador"']
 	].
 	
+
 <OrigemInfo> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT origem_informacao, data_origem AS DT_ORIGEM FROM cnep"""
+		rr:sqlQuery """SELECT numero_processo, cpf_ou_cnpj, tipo_sancao, origem_informacao, data_origem, detalhamento
+		FROM cnep"""
 	];
 	rr:subjectMap [
-		rr:class ardo:OrigemInfo;
-		rr:template "http://www.arida.com/ceis_cnep/ontology/resource/OrigemInfo/{DT_ORIGEM}"
+		rr:class ardo_cnep_ceis:OrigemInfo;
+		rr:template "http://www.arida.com/cnep/resource/OrigemInfo/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:nome;
+		rr:predicate ardo_cnep_ceis:nome;
 		rr:objectMap [ rr:column '"origem_informacao"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo:data_info;
+		rr:predicate ardo_cnep_ceis:detalhamento;
+		rr:objectMap [ rr:column '"detalhamento"']
+	];
+	rr:predicateObjectMap [
+		rr:predicate ardo_cnep_ceis:data_info;
 		rr:objectMap [ rr:column '"data_origem"']
-	].
+	]
+	.
+
+
+<geradoPelo> a rr:TripleMap;
+	rr:logicalTable [
+		rr:sqlQuery """
+			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao
+			FROM cnep
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/cnep/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+		];
+	rr:predicateObjectMap
+		[
+			rr:predicate ardo_cnep_ceis:geradaPelo;
+			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/Processo/{numero_processo}" ]
+		]
+	.
+
+<aplicadaSobre> a rr:TripleMap;
+	rr:logicalTable [
+		rr:sqlQuery """
+			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao
+			FROM cnep
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/cnep/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+		];
+	rr:predicateObjectMap
+		[
+			rr:predicate ardo_cnep_ceis:geradaPelo;
+			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/Pessoa/{cpf_ou_cnpj}" ]
+		]
+	.
+
+
+<informacoesPublicacao> a rr:TripleMap;
+	rr:logicalTable [
+		rr:sqlQuery """
+			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao
+			FROM cnep
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/cnep/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+		];
+	rr:predicateObjectMap
+		[
+			rr:predicate ardo_cnep_ceis:informacoesPublicacao;
+			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/Publicacao/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
+		]
+	.
+
+<informacoesOrigemInfo> a rr:TripleMap;
+	rr:logicalTable [
+		rr:sqlQuery """
+			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao
+			FROM cnep
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/cnep/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+		];
+	rr:predicateObjectMap
+		[
+			rr:predicate ardo_cnep_ceis:informacoesOrigem;
+			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/OrigemInfo/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
+		]
+	.
+
+<sanciona> a rr:TripleMap;
+	rr:logicalTable [
+		rr:sqlQuery """
+			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao, orgao_sancionador 
+			FROM cnep
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/cnep/resource/OrgaoSancionador/{orgao_sancionador}"
+		];
+	rr:predicateObjectMap
+		[
+			rr:predicate ardo_cnep_ceis:sanciona;
+			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
+		]
+	.
+
+
+<temUF> a rr:TripleMap;
+	rr:logicalTable [
+		rr:sqlQuery """
+			SELECT orgao_sancionador, uf_orgao_sancionador
+			FROM cnep
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/cnep/resource/OrgaoSancionador/{orgao_sancionador}"
+		];
+	rr:predicateObjectMap
+		[
+			rr:predicate ardo_cnep_ceis:temUF;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resource/UnidadeFederativa/{uf_orgao_sancionador}" ]
+		]
+	.
