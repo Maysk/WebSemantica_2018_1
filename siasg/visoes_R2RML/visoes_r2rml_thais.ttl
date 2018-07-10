@@ -2,13 +2,12 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ardo: <http://www.arida.com/ontology/> .
 
-## Classe "CONTRATO"
+## Classe "CONTRATO" - OK
 <Contrato> a rr:TripleMap;
 	rr:logicalTable
 		[
 			rr:sqlQuery """
-				SELECT identificador, data_assinatura, data_inicio_vigencia, data_termino_vigencia, fundamento_legal, numero_processo, 
-				valor_inicial, objeto, numero, numero_aditivo
+				SELECT *
 				FROM contratos
 			"""
 		];
@@ -106,24 +105,25 @@
 
 		[
 			rr:predicate ardo:temContratado;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/fornecedor/{cnpj_contratada}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/pessoa/{cnpj_contratada}" ]
 		]; 
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:temContratado;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/fornecedor/{cpfcontratada}" ]
-		]; 
+			rr:objectMap [ rr:column '"cpfContratada"' ]
+		]
 	.
 
-## Classe "FORNECEDOR"
-<Fornecedor> a rr:TripleMap;
+## Classe "FORNECEDORPF"
+<FornecedorPF> a rr:TripleMap;
 	rr:logicalTable
 		[
 			rr:sqlQuery """
-				SELECT id, nome
+				SELECT *
 				FROM fornecedores
+				WHERE cpf is not NULL
 			"""
 		];
 	rr:subjectMap
@@ -131,6 +131,8 @@
 			rr:class ardo:Fornecedor;
 			rr:template "http://www.arida.com/siasg/resources/fornecedor/{id}"
 		];
+
+
 
 	rr:predicateObjectMap 
 
@@ -142,7 +144,14 @@
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:nome;
+			rr:predicate ardo:cpf_anonimizado;
+			rr:objectMap [rr:column '"cpf"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_fornecedor;
 			rr:objectMap [rr:column '"nome"']
 		];
 
@@ -157,9 +166,10 @@
 
 		[
 			rr:predicate ardo:cadastradoPor;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/unidadecadastradora/{id_unidade_cadastradora}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/uasg/{id_unidade_cadastradora}" ]
 		];  
 	. 
+
 
 ## Classe "FORNECEDOR PJ"
 <FornecedorPJ> a rr:TripleMap;
@@ -168,7 +178,7 @@
 			rr:sqlQuery """
 				SELECT *
 				FROM fornecedores
-				WHERE cnpj NOT NULL
+				WHERE cnpj IS NOT NULL
 			"""
 		];
 	rr:subjectMap
@@ -176,7 +186,38 @@
 			rr:class ardo:Fornecedor, ardo:PessoaJuridica, ardo:FornecedorPJ;
 			rr:template "http://www.arida.com/siasg/resources/fornecedor/{cnpj}"
 		];
+	rr:predicateObjectMap 
 
+		[
+			rr:predicate ardo:sicaf_id;
+			rr:objectMap [rr:column '"id"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_fornecedor;
+			rr:objectMap [rr:column '"nome"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cnpj;
+			rr:objectMap [rr:column '"cnpj"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temMunicipio;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/municipio/{id_municipio}" ]
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cadastradoPor;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/uasg/{id_unidade_cadastradora}" ]
+		];
 	rr:predicateObjectMap 
 
 		[
@@ -243,12 +284,45 @@
 		];
 	.
 
+<RamoDeNegocioAtivo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, ativo
+				FROM ramos_negocio
+				WHERE ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:RamoDeNegocioAtivo;
+			rr:template "http://www.arida.com/siasg/resources/ramodenegocio/{id}"
+		]
+	.
+
+<RamoDeNegocioInativo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, ativo
+				FROM ramos_negocio
+				WHERE ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:RamoDeNegocioAtivo;
+			rr:template "http://www.arida.com/siasg/resources/ramodenegocio/{id}"
+		]
+	.
+
+
 ## Classe "NATUREZA JURIDICA"
 <NaturezaJuridica> a rr:TripleMap;
 	rr:logicalTable
 		[
 			rr:sqlQuery """
-				SELECT id, codigo, descricao
+				SELECT *
 				FROM naturezas_juridicas
 			"""
 		];
@@ -279,6 +353,40 @@
 			rr:objectMap [rr:column '"codigo"']
 		];
 	.
+
+
+<NaturezaJuridicaAtiva> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, ativo
+				FROM naturezas_juridicas
+				WHERE ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:NaturezaJuridicaAtiva;
+			rr:template "http://www.arida.com/siasg/resources/naturezajuridica/{id}"
+		];
+	.
+
+<NaturezaJuridicaInativa> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, ativo
+				FROM naturezas_juridicas
+				WHERE ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:NaturezaJuridicaInativa;
+			rr:template "http://www.arida.com/siasg/resources/naturezajuridica/{id}"
+		];
+	.
+
 
 ## Classe "PORTE DA EMPRESA"
 <PorteDaEmpresa> a rr:TripleMap;
