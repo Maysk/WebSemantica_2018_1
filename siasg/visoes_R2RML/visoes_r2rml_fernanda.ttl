@@ -14,7 +14,7 @@
 	rr:subjectMap
 		[
 			rr:class ardo:Licitacao;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		];
 
 	rr:predicateObjectMap 
@@ -28,7 +28,7 @@
 
 		[
 			rr:predicate ardo:numero_aviso;
-			rr:objectMap [rr:column '"numero_do_aviso"']
+			rr:objectMap [rr:column '"numero_aviso"']
 		];
 
 	rr:predicateObjectMap 
@@ -112,31 +112,31 @@
 
 		[
 			rr:predicate ardo:quantidade_itens;
-			rr:objectMap [rr:column '"quantidade_itens"']
-		];
-
-	rr:predicateObjectMap 
-
-		[
-			rr:predicate ardo:valor_licitacao;
-			rr:objectMap [rr:column '"valor_licitacap"']
-		];
-
-	rr:predicateObjectMap 
-
-		[
-			rr:predicate ardo:ocorreEm;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/municipio/{nome}" ]
+			rr:objectMap [rr:column '"numero_itens"']
 		];
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:unidadeResponsavel;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/uasg/{identificador}" ]
-		].
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UASG/{uasg}" ]
+		]
+	.
 
-
+<Licitacao_Pregao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+				WHERE modalidade = 5
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Pregao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
 
 <Licitacao_Pregao_Eletronico> a rr:TripleMap;
 	rr:logicalTable
@@ -149,8 +149,8 @@
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:Pregao, ardo:PregaoEletronico;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:class ardo:PregaoEletronico;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		] .
 
 
@@ -160,13 +160,13 @@
 			rr:sqlQuery """
 				SELECT * 
 				FROM licitacoes
-				WHERE modalidade = 5 and tipo_pregao = 'Eletrônico'
+				WHERE modalidade = 5 and tipo_pregao = 'Presencial'
 			"""
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:Pregao, ardo:PregaoPresencial;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:class ardo:PregaoPresencial;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		] .
 
 <Licitacao_Convite> a rr:TripleMap;
@@ -181,7 +181,7 @@
 	rr:subjectMap
 		[
 			rr:class ardo:Convite;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		] .
 
 <Licitacao_Tomada_de_Preco> a rr:TripleMap;
@@ -195,8 +195,8 @@
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:tomada_de_preco;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:class ardo:TomadaDePreco;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		] .
 
 <Licitacao_Concorrencia> a rr:TripleMap;
@@ -210,8 +210,23 @@
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:concorrencia;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:class ardo:Concorrencia;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Concorrencia> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+				WHERE modalidade = 4
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:ConcorrenciaInternacional;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		] .
 
 <Licitacao_Dispensa_de_Licitacao> a rr:TripleMap;
@@ -225,8 +240,8 @@
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:dispensa_de_licitacao;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:class ardo:DispensaDeLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		] .
 
 <Licitacao_Inexibilidade_de_Licitacao> a rr:TripleMap;
@@ -240,8 +255,8 @@
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:inexibilidade_de_licitacao;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:class ardo:InexibilidadeDeLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		] .
 
 <Licitacao_Concurso> a rr:TripleMap;
@@ -255,9 +270,69 @@
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:concurso;
-			rr:template "http://www.arida.com/siasg/resources/licitacao/{identificador}"
+			rr:class ardo:Concurso;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
 		] .	
+
+<Licitacao_TomadaDePrecoPorTecnicaEPreco> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+				WHERE modalidade = 22
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:TomadaDePreco, ardo:TecnicaEPreco;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_ConcorrenciaPorTecnicaEPreco> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+				WHERE modalidade = 33
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Concorrencia, ardo:TecnicaEPreco;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_ConcorrenciaInternacionalPorTecnicaEPreco> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+				WHERE modalidade = 44
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:ConcorrenciaInternacional, ardo:TecnicaEPreco;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_RDC> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes
+				WHERE modalidade = 99
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:RegimeDiferenciadoDeContratacao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
 
 ## CLASSE UASG
 <UASG> a rr:TripleMap;
@@ -265,29 +340,34 @@
 		[
 			rr:sqlQuery """
 				SELECT * 
-				FROM uasg
+				FROM uasgs
 			"""
 		];
 	rr:subjectMap
 		[
 			rr:class ardo:UASG;
-			rr:template "http://www.arida.com/siasg/resources/uasg/{identificador}"
+			rr:template "http://www.arida.com/siasg/resources/UASG/{id}"
 		];
 
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:uasg_id;
-			rr:objectMap [rr:column '"identificador"']
+			rr:predicate ardo:sicaf_id;
+			rr:objectMap [rr:column '"id"']
 		];
 
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:nome_uasg;
-			rr:objectMap [rr:column '"nome_uasg"']
+			rr:predicate ardo:nome;
+			rr:objectMap [rr:column '"nome"']
 		];
+	rr:predicateObjectMap 
 
+		[
+			rr:predicate ardo:nome_mnemonico;
+			rr:objectMap [rr:column '"nome_mnemonico"']
+		];
 	rr:predicateObjectMap 
 
 		[
@@ -298,30 +378,61 @@
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:associadoAo;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/orgao/{identificador}" ]
+			rr:predicate ardo:orgaoAssociado;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Orgao/{id_orgao}" ]
 		];
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:localizadoEm;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/municipio/{nome}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Municipio/{id_municipio}" ]
 		].
 	
+
+<UASG_Ativa> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM uasgs
+				WHERE ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:UASGAtiva;
+			rr:template "http://www.arida.com/siasg/resources/UASG/{id}"
+		].
+
+<UASG_Inativa> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM uasgs
+				WHERE ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:UASGInativa;
+			rr:template "http://www.arida.com/siasg/resources/UASG/{id}"
+		].
 
 <UASG_Unidade_Cadastradora> a rr:TripleMap;
 	rr:logicalTable
 		[
 			rr:sqlQuery """
 				SELECT * 
-				FROM uasg
+				FROM uasgs
+				WHERE unidade_cadastradora is true
 			"""
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:Licitacao;
-			rr:template "http://www.arida.com/siasg/resources/uasg/{identificador}"
+			rr:class ardo:UnidadeCadastradora;
+			rr:template "http://www.arida.com/siasg/resources/UASG/{id}"
 		].
 
 ##CLASSE ORGAO
@@ -330,27 +441,27 @@
 		[
 			rr:sqlQuery """
 				SELECT * 
-				FROM Orgao
+				FROM orgaos
 			"""
 		];
 	rr:subjectMap
 		[
 			rr:class ardo:Orgao;
-			rr:template "http://www.arida.com/siasg/resources/orgao/{identificador}"
+			rr:template "http://www.arida.com/siasg/resources/Orgao/{codigo}"
 		];
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:sicaf_id;
-			rr:objectMap [rr:column '"identificador"']
+			rr:objectMap [rr:column '"codigo"']
 		];
 
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:nome_orgao;
-			rr:objectMap [rr:column '"nome_orgao"']
+			rr:predicate ardo:nome;
+			rr:objectMap [rr:column '"nome"']
 		];
 
 	rr:predicateObjectMap 
@@ -365,13 +476,51 @@
 		[
 			rr:predicate ardo:codigo_tipo_adm;
 			rr:objectMap [rr:column '"codigo_tipo_adm"']
-		];
+		] .
 
-	rr:predicateObjectMap 
-
+<OrgaoFederal> a rr:TripleMap;
+	rr:logicalTable
 		[
-			rr:predicate ardo:supervisionadoPor;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/orgao/{identificador}" ]
+			rr:sqlQuery """
+				SELECT * 
+				FROM orgaos
+				WHERE codigo_tipo_esfera like 'Federal'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:OrgaoFederal;
+			rr:template "http://www.arida.com/siasg/resources/Orgao/{codigo}"
+		].
+
+<OrgaoEstadual> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM orgaos
+				WHERE codigo_tipo_esfera like 'Estadual'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:OrgaoEstadual;
+			rr:template "http://www.arida.com/siasg/resources/Orgao/{codigo}"
+		].
+
+<OrgaoMunicipal> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM orgaos
+				WHERE codigo_tipo_esfera like 'Municipal'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:OrgaoMunicipal;
+			rr:template "http://www.arida.com/siasg/resources/Orgao/{codigo}"
 		].
 
 
@@ -380,28 +529,28 @@
 	rr:logicalTable
 		[
 			rr:sqlQuery """
-				SELECT * 
-				FROM UnidadeFederativa
+				SELECT distinct nome_uf, sigla_uf 
+				FROM municipios
 			"""
 		];
 	rr:subjectMap
 		[
-			rr:class ardo:Unidade_Federativa;
-			rr:template "http://www.arida.com/siasg/resources/unidade_federativa/{nome}"
+			rr:class ardo:UnidadeFederativa;
+			rr:template "http://www.arida.com/siasg/resources/UnidadeFederativa/{sigla_uf}"
 		];
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:nome;
-			rr:objectMap [rr:column '"nome"']
+			rr:objectMap [rr:column '"nome_uf"']
 		];
 
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:sigla;
-			rr:objectMap [rr:column '"sigla"']
+			rr:predicate ardo:sigla_uf;
+			rr:objectMap [rr:column '"sigla_uf"']
 		].
 
 ##CLASSE MUNICIPIO
@@ -410,13 +559,13 @@
 		[
 			rr:sqlQuery """
 				SELECT * 
-				FROM Municipio
+				FROM municipios
 			"""
 		];
 	rr:subjectMap
 		[
 			rr:class ardo:Municipio;
-			rr:template "http://www.arida.com/siasg/resources/municipio/{nome}"
+			rr:template "http://www.arida.com/siasg/resources/Municipio/{id}"
 		];
 
 	rr:predicateObjectMap 
@@ -436,29 +585,23 @@
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:owl_equivalentClass;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/dbpedia_owl_City/{nome}" ]
-		];
-
-	rr:predicateObjectMap 
-
-		[
 			rr:predicate ardo:temUF;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/unidade_federativa/{nome}" ]
-		];
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UnidadeFederativa/{sigla_uf}" ]
+		].
 
 <Municipio_Ativo> a rr:TripleMap;
 	rr:logicalTable
 		[
 			rr:sqlQuery """
 				SELECT * 
-				FROM Municipio
+				FROM municipios
+				WHERE ativo is true
 			"""
 		];
 	rr:subjectMap
 		[
 			rr:class ardo:Municipio_Ativo;
-			rr:template "http://www.arida.com/siasg/resources/municipio/{nome}"
+			rr:template "http://www.arida.com/siasg/resources/Municipio/{id}"
 		].
 
 <Municipio_Inativo> a rr:TripleMap;
@@ -466,26 +609,12 @@
 		[
 			rr:sqlQuery """
 				SELECT * 
-				FROM Municipio
+				FROM municipios
+				WHERE ativo is false
 			"""
 		];
 	rr:subjectMap
 		[
 			rr:class ardo:Municipio_Inativo;
-			rr:template "http://www.arida.com/siasg/resources/municipio/{nome}"
+			rr:template "http://www.arida.com/siasg/resources/Municipio/{id}"
 		].
-
-##CLASSE dbpedia_owl_City
-<dbpedia_owl_city> a rr:TripleMap;
-	rr:logicalTable
-		[
-			rr:sqlQuery """
-				SELECT * 
-				FROM dbpedia_owl_City
-			"""
-		];
-	rr:subjectMap
-		[
-			rr:class ardo:dbpedia_owl_City;
-			rr:template "http://www.arida.com/siasg/resources/dbpedia_owl_City/{nome}"
-		];

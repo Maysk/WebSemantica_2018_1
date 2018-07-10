@@ -2,8 +2,7 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
-@prefix ardo_cnep_ceis: <http://www.arida.com/ceis_cnep/ontology/> .
-@prefix ardo_siasg: <http://www.arida.com/siasg/ontology/> .
+@prefix ardo: <http://www.arida.com/ontology/> .
 
 
 <PessoaJuridica> a rr:TripleMap;
@@ -12,27 +11,27 @@
 		WHERE tipo_pessoa = 'J'"""
 	];
 	rr:subjectMap [
-		rr:class ardo_siasg:PessoaJuridica, ardo_cnep_ceis:SancionadoPJ, ardo_cnep_ceis:Sancionado ;
+		rr:class ardo:PessoaJuridica, ardo:SancionadoPJ, ardo:Sancionado ;
 		rr:template "http://www.arida.com/cnep/resource/Pessoa/{PJ_ID}"
 	];
 	rr:predicateObjectMap 
 	[
-		rr:predicate ardo_siasg:cnpj;
+		rr:predicate ardo:cnpj;
 		rr:objectMap [ rr:column '"pj_id"' ]
 	];
 	rr:predicateObjectMap 
 	[
-		rr:predicate ardo_cnep_ceis:nome_fantasia;
+		rr:predicate ardo:nome_fantasia;
 		rr:objectMap [ rr:column '"nome_fantasia"' ];
 	];
 	rr:predicateObjectMap 
 	[
-		rr:predicate ardo_cnep_ceis:razao_social;
+		rr:predicate ardo:razao_social;
 		rr:objectMap [ rr:column '"razao_social"' ]
 	];
 	rr:predicateObjectMap 
 	[
-		rr:predicate ardo_cnep_ceis:nome_informado;
+		rr:predicate ardo:nome_informado;
 		rr:objectMap [ rr:column '"nome_informado_pelo_sancionador"' ]
 	] . 
 
@@ -44,15 +43,15 @@
 		"""
 	];
 	rr:subjectMap [
-		rr:class ardo_siasg:PessoaFisica, ardo_cnep_ceis:SancionadoPF, ardo_cnep_ceis:Sancionado;
+		rr:class ardo:PessoaFisica, ardo:SancionadoPF, ardo:Sancionado;
 		rr:template "http://www.arida.com/cnep/resource/Pessoa/{PF_ID}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_siasg:cpf;
+		rr:predicate ardo:cpf;
 		rr:objectMap [ rr:column '"pf_id"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:nome_informado;
+		rr:predicate ardo:nome_informado;
 		rr:objectMap [ rr:column '"nome_informado_pelo_sancionador"']
 	] .
 
@@ -65,27 +64,27 @@
 		"""
 	];
 	rr:subjectMap [
-		rr:class ardo_cnep_ceis:SancaoAplicada;
+		rr:class ardo:SancaoAplicada;
 		rr:template "http://www.arida.com/cnep/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:data_inicio;
+		rr:predicate ardo:data_inicio;
 		rr:objectMap [ rr:column '"data_inicio"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:data_final;
+		rr:predicate ardo:data_final;
 		rr:objectMap [ rr:column '"data_final"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:fundamentacao_legal;
+		rr:predicate ardo:fundamentacao_legal;
 		rr:objectMap [ rr:column '"fundamentacao"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:descricao;
+		rr:predicate ardo:descricao;
 		rr:objectMap [ rr:column '"descricao_fundamentacao"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:valor_multa;
+		rr:predicate ardo:valor_multa;
 		rr:objectMap [ rr:column '"valor_multa"']
 	] .
 
@@ -96,15 +95,15 @@
 		"""
 	];
 	rr:subjectMap [
-		rr:class ardo_cnep_ceis:Processo;
+		rr:class ardo:Processo;
 		rr:template "http://www.arida.com/cnep/resource/Processo/{numero_processo}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:numero_processo;
+		rr:predicate ardo:numero_processo;
 		rr:objectMap [ rr:column '"numero_processo"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:data_transito_julgado;
+		rr:predicate ardo:data_transito_julgado;
 		rr:objectMap [ rr:column '"data_transito"']
 	].
 	
@@ -117,19 +116,19 @@
 		"""
 	];
 	rr:subjectMap [
-		rr:class ardo_cnep_ceis:Publicacao;
+		rr:class ardo:Publicacao;
 		rr:template "http://www.arida.com/cnep/resource/Publicacao/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:data_publicacao;
+		rr:predicate ardo:data_publicacao;
 		rr:objectMap [ rr:column '"data_publicacao"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:local_publicacao;
+		rr:predicate ardo:local_publicacao;
 		rr:objectMap [ rr:column '"publicacao"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:detalhamento;
+		rr:predicate ardo:detalhamento;
 		rr:objectMap [ rr:column '"detalhamento"']
 	].
 
@@ -138,15 +137,15 @@
 		rr:sqlQuery """SELECT orgao_sancionador, complemento_orgao FROM cnep"""
 	];
 	rr:subjectMap [
-		rr:class ardo_cnep_ceis:OrgaoSancionador;
+		rr:class ardo:OrgaoSancionador;
 		rr:template "http://www.arida.com/cnep/resource/OrgaoSancionador/{orgao_sancionador}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:nome_orgao;
+		rr:predicate ardo:nome_orgao;
 		rr:objectMap [ rr:column '"orgao_sancionador"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:complemento;
+		rr:predicate ardo:complemento;
 		rr:objectMap [ rr:column '"complemento_orgao"']
 	].
 
@@ -155,11 +154,11 @@
 		rr:sqlQuery """SELECT uf_orgao_sancionador FROM cnep"""
 	];
 	rr:subjectMap [
-		rr:class ardo_cnep_ceis:UnidadeFederativa;
-		rr:template "http://www.arida.com/siasg/resource/UnidadeFederativa/{uf_orgao_sancionador}"
+		rr:class ardo:UnidadeFederativa;
+		rr:template "http://www.arida.com/siasg/resources/UnidadeFederativa/{uf_orgao_sancionador}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:sigla_uf;
+		rr:predicate ardo:sigla_uf;
 		rr:objectMap [ rr:column '"uf_orgao_sancionador"']
 	].
 	
@@ -170,19 +169,19 @@
 		FROM cnep"""
 	];
 	rr:subjectMap [
-		rr:class ardo_cnep_ceis:OrigemInfo;
+		rr:class ardo:OrigemInfo;
 		rr:template "http://www.arida.com/cnep/resource/OrigemInfo/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:nome;
+		rr:predicate ardo:nome;
 		rr:objectMap [ rr:column '"origem_informacao"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:detalhamento;
+		rr:predicate ardo:detalhamento;
 		rr:objectMap [ rr:column '"detalhamento"']
 	];
 	rr:predicateObjectMap [
-		rr:predicate ardo_cnep_ceis:data_info;
+		rr:predicate ardo:data_info;
 		rr:objectMap [ rr:column '"data_origem"']
 	]
 	.
@@ -201,7 +200,7 @@
 		];
 	rr:predicateObjectMap
 		[
-			rr:predicate ardo_cnep_ceis:geradaPelo;
+			rr:predicate ardo:geradaPelo;
 			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/Processo/{numero_processo}" ]
 		]
 	.
@@ -219,7 +218,7 @@
 		];
 	rr:predicateObjectMap
 		[
-			rr:predicate ardo_cnep_ceis:geradaPelo;
+			rr:predicate ardo:geradaPelo;
 			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/Pessoa/{cpf_ou_cnpj}" ]
 		]
 	.
@@ -238,7 +237,7 @@
 		];
 	rr:predicateObjectMap
 		[
-			rr:predicate ardo_cnep_ceis:informacoesPublicacao;
+			rr:predicate ardo:informacoesPublicacao;
 			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/Publicacao/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
 		]
 	.
@@ -256,7 +255,7 @@
 		];
 	rr:predicateObjectMap
 		[
-			rr:predicate ardo_cnep_ceis:informacoesOrigem;
+			rr:predicate ardo:informacoesOrigem;
 			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/OrigemInfo/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
 		]
 	.
@@ -274,7 +273,7 @@
 		];
 	rr:predicateObjectMap
 		[
-			rr:predicate ardo_cnep_ceis:sanciona;
+			rr:predicate ardo:sanciona;
 			rr:objectMap [ rr:template "http://www.arida.com/cnep/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
 		]
 	.
@@ -293,7 +292,7 @@
 		];
 	rr:predicateObjectMap
 		[
-			rr:predicate ardo_cnep_ceis:temUF;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resource/UnidadeFederativa/{uf_orgao_sancionador}" ]
+			rr:predicate ardo:temUF;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UnidadeFederativa/{uf_orgao_sancionador}" ]
 		]
 	.
