@@ -199,7 +199,6 @@
 		]; 
 	.
 
-
 <FornecedorPJ_Ativo> a rr:TripleMap;
 	rr:logicalTable
 		[

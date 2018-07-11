@@ -158,3 +158,27 @@ CREATE TABLE rdcs(
 				tipo_recurso text,
 				uasg integer
 			);
+
+---------------------------------------------------------------------------------
+
+CREATE TABLE item_licitacao(
+	beneficio text, 	
+	cnpj_fornecedor	text,
+	codigo_item_material integer,	
+	codigo_item_servico	integer,
+	cpfVencedor	text,
+	criterio_julgamento	text,
+	decreto_7174 boolean,
+	descricao_item	text,
+	modalidade integer,
+	numero_aviso text,
+	numero_item_licitacao integer,
+	numero_licitacao text,
+	quantidade text,
+	sustentavel	boolean
+	uasg integer
+	unidade	text,
+	valor_estimado	real 
+);
+
+	

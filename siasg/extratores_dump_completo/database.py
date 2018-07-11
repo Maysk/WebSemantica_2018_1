@@ -4,6 +4,29 @@ import logging
 
 logger = logging.getLogger("MainExtractor.Database")
 
+def get_licitacoes_do_ceara():
+	conn = None
+	lista_de_licitacoes = []
+
+	try:
+		params = config()
+		conn = psycopg2.connect(**params)
+		cur = conn.cursor()
+		cur.execute('SELECT identificador from licitacoes_do_ceara')
+		lista_de_licitacoes = cur.fetchall()
+
+		cur.close()
+
+	except psycopg2.DatabaseError as error:
+		print("Error")
+		return lista_de_licitacoes
+
+	finally:
+		if conn is not None:
+			conn.close()
+			
+		return lista_de_licitacoes
+
 def bulk_insert(lista_de_instancias, keys, nome_da_tabela):
 	conn = None
 	sql = "INSERT INTO public."+ nome_da_tabela + "(" + ",".join(keys) + ") VALUES(" + ",".join(["%("+k+")s" for k in keys]) + ");"

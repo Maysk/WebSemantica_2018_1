@@ -1,0 +1,492 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+
+
+## CLASSE UASG
+<UASG> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM uasgs_do_ceara
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:UASG;
+			rr:template "http://www.arida.com/siasg/resources/UASG/{id}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:sicaf_id;
+			rr:objectMap [rr:column '"id"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome;
+			rr:objectMap [rr:column '"nome"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_mnemonico;
+			rr:objectMap [rr:column '"nome_mnemonico"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cep;
+			rr:objectMap [rr:column '"cep"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:orgaoAssociado;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Orgao/{id_orgao}" ]
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:localizadoEm;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Municipio/{id_municipio}" ]
+		].
+	
+
+<UASG_Ativa> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM uasgs_do_ceara
+				WHERE ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:UASGAtiva;
+			rr:template "http://www.arida.com/siasg/resources/UASG/{id}"
+		].
+
+<UASG_Inativa> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM uasgs_do_ceara
+				WHERE ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:UASGInativa;
+			rr:template "http://www.arida.com/siasg/resources/UASG/{id}"
+		].
+
+<UASG_Unidade_Cadastradora> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM uasgs_do_ceara
+				WHERE unidade_cadastradora is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:UnidadeCadastradora;
+			rr:template "http://www.arida.com/siasg/resources/UASG/{id}"
+		].
+
+##CLASSE ORGAO
+<Orgao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM orgaos
+				WHERE codigo IN (select id_orgao from uasgs_do_ceara);
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Orgao;
+			rr:template "http://www.arida.com/siasg/resources/Orgao/{codigo}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:sicaf_id;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome;
+			rr:objectMap [rr:column '"nome"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo_tipo_poder;
+			rr:objectMap [rr:column '"codigo_tipo_poder"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo_tipo_adm;
+			rr:objectMap [rr:column '"codigo_tipo_adm"']
+		] .
+
+<OrgaoFederal> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM orgaos 
+				WHERE codigo_tipo_esfera like 'Federal' and codigo IN (select id_orgao from uasgs_do_ceara);
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:OrgaoFederal;
+			rr:template "http://www.arida.com/siasg/resources/Orgao/{codigo}"
+		].
+
+<OrgaoEstadual> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM orgaos
+				WHERE codigo_tipo_esfera like 'Estadual' and codigo IN (select id_orgao from uasgs_do_ceara);
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:OrgaoEstadual;
+			rr:template "http://www.arida.com/siasg/resources/Orgao/{codigo}"
+		].
+
+<OrgaoMunicipal> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM orgaos
+				WHERE codigo_tipo_esfera like 'Municipal' and codigo IN (select id_orgao from uasgs_do_ceara);
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:OrgaoMunicipal;
+			rr:template "http://www.arida.com/siasg/resources/Orgao/{codigo}"
+		].
+
+
+##CLASSE UNIDADE FEDERATIVA
+<Unidade_Federativa> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT distinct nome_uf, sigla_uf 
+				FROM municipios_do_ceara
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:UnidadeFederativa;
+			rr:template "http://www.arida.com/siasg/resources/UnidadeFederativa/{sigla_uf}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome;
+			rr:objectMap [rr:column '"nome_uf"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:sigla_uf;
+			rr:objectMap [rr:column '"sigla_uf"']
+		].
+
+##CLASSE MUNICIPIO
+<Municipio> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM municipios_do_ceara
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Municipio;
+			rr:template "http://www.arida.com/siasg/resources/Municipio/{id}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome;
+			rr:objectMap [rr:column '"nome"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo_ibge;
+			rr:objectMap [rr:column '"codigo_ibge"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temUF;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UnidadeFederativa/{sigla_uf}" ]
+		].
+
+<Municipio_Ativo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM municipios_do_ceara
+				WHERE ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Municipio_Ativo;
+			rr:template "http://www.arida.com/siasg/resources/Municipio/{id}"
+		].
+
+<Municipio_Inativo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM municipios_do_ceara
+				WHERE ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Municipio_Inativo;
+			rr:template "http://www.arida.com/siasg/resources/Municipio/{id}"
+		].
+
+
+## Classe "RAMO DE NEGOCIO"
+<RamoDeNegocio> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, descricao
+				FROM ramos_negocio
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:RamoDeNegocio;
+			rr:template "http://www.arida.com/siasg/resources/RamoDeNegocio/{id}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:ramo_de_negocio_id;
+			rr:objectMap [rr:column '"id"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+	.
+
+<RamoDeNegocioAtivo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, ativo
+				FROM ramos_negocio
+				WHERE ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:RamoDeNegocioAtivo;
+			rr:template "http://www.arida.com/siasg/resources/RamoDeNegocio/{id}"
+		]
+	.
+
+<RamoDeNegocioInativo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, ativo
+				FROM ramos_negocio
+				WHERE ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:RamoDeNegocioInativo;
+			rr:template "http://www.arida.com/siasg/resources/RamoDeNegocio/{id}"
+		]
+	.
+
+
+## Classe "NATUREZA JURIDICA"
+<NaturezaJuridica> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM naturezas_juridicas
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:NaturezaJuridica;
+			rr:template "http://www.arida.com/siasg/resources/NaturezaJuridica/{id}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:natureza_juridica_id;
+			rr:objectMap [rr:column '"id"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo_natureza_juridica;
+			rr:objectMap [rr:column '"codigo"']
+		];
+	.
+
+
+<NaturezaJuridicaAtiva> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, ativo
+				FROM naturezas_juridicas
+				WHERE ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:NaturezaJuridicaAtiva;
+			rr:template "http://www.arida.com/siasg/resources/NaturezaJuridica/{id}"
+		];
+	.
+
+<NaturezaJuridicaInativa> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, ativo
+				FROM naturezas_juridicas
+				WHERE ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:NaturezaJuridicaInativa;
+			rr:template "http://www.arida.com/siasg/resources/NaturezaJuridica/{id}"
+		];
+	.
+
+
+## Classe "PORTE DA EMPRESA"
+<PorteDaEmpresa> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, descricao
+				FROM portes_empresa
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:PorteDaEmpresa;
+			rr:template "http://www.arida.com/siasg/resources/PorteDaEmpresa/{id}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:porte_da_empresa_id;
+			rr:objectMap [rr:column '"id"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+	.
+
+## Classe "CNAE"
+<CNAE> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT id, descricao, codigo_longo
+				FROM cnaes
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:CNAE;
+			rr:template "http://www.arida.com/siasg/resources/CNAE/{id}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cnae_id;
+			rr:objectMap [rr:column '"id"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo_longo_cnae;
+			rr:objectMap [rr:column '"codigo_longo"']
+		];
+	.

@@ -1,0 +1,116 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+
+
+## Classe "FORNECEDORPF"
+<FornecedorPF> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cpf is not NULL
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Fornecedor, ardo:PessoaFisica, ardo:FornecedorPF;
+			rr:template "http://www.arida.com/siasg/resources/FornecedorPF/{id}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:sicaf_id;
+			rr:objectMap [rr:column '"id"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cpf_anonimizado;
+			rr:objectMap [rr:column '"cpf"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome;
+			rr:objectMap [rr:column '"nome"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temMunicipio;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Municipio/{id_municipio}" ]
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cadastradoPor;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/UASG/{id_unidade_cadastradora}" ]
+		];  
+	. 
+
+<FornecedorPF_Ativo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cpf is not NULL and ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:FornecedorAtivo;
+			rr:template "http://www.arida.com/siasg/resources/FornecedorPF/{id}"
+		] .
+
+<FornecedorPF_Inativo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cpf is not NULL and ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:FornecedorInativo;
+			rr:template "http://www.arida.com/siasg/resources/FornecedorPF/{id}"
+		] .
+
+<FornecedorPF_Recadastrado> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cpf is not NULL and recadastrado is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Recadastrado;
+			rr:template "http://www.arida.com/siasg/resources/FornecedorPF/{id}"
+		] .
+
+<FornecedorPF_HabilitadoALicitar> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cpf is not NULL and habilitado_licitar is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:HabilitadoALicitar;
+			rr:template "http://www.arida.com/siasg/resources/FornecedorPF/{id}"
+		] .

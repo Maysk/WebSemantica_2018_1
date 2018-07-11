@@ -1,0 +1,335 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+
+##CLASSE LICITACOES
+<Licitacoes> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Licitacao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:identificador_licitacao;
+			rr:objectMap [rr:column '"identificador"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:numero_aviso;
+			rr:objectMap [rr:column '"numero_aviso"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:situacao_aviso;
+			rr:objectMap [rr:column '"situacao_aviso"']
+		];
+	
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:objeto;
+			rr:objectMap [rr:column '"objeto"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:data_publicacao;
+			rr:objectMap [rr:column '"data_publicacao"']
+		];	
+	
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:data_abertura_proposta;
+			rr:objectMap [rr:column '"data_abertura_proposta"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_responsavel;
+			rr:objectMap [rr:column '"nome_responsavel"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:informacoes_gerais;
+			rr:objectMap [rr:column '"informacoes_gerais"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:funcao_responsavel;
+			rr:objectMap [rr:column '"funcao_responsavel"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_responsavel;
+			rr:objectMap [rr:column '"nome_responsavel"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:endereco_entrega_edital;
+			rr:objectMap [rr:column '"endereco_entrega_edital"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:data_entrega_edital;
+			rr:objectMap [rr:column '"data_entrega_edital"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:data_entrega_proposta;
+			rr:objectMap [rr:column '"data_entrega_proposta"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:quantidade_itens;
+			rr:objectMap [rr:column '"numero_itens"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:unidadeResponsavel;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UASG/{uasg}" ]
+		]
+	.
+
+<Licitacao_Pregao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 5
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Pregao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Pregao_Eletronico> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 5 and tipo_pregao = 'Eletrônico'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:PregaoEletronico;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+
+<Licitacao_Pregao_Presencial> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 5 and tipo_pregao = 'Presencial'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:PregaoPresencial;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Convite> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 1 
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Convite;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Tomada_de_Preco> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 2 
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:TomadaDePreco;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Concorrencia> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 3 
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Concorrencia;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Concorrencia> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 4
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:ConcorrenciaInternacional;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Dispensa_de_Licitacao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 6 
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:DispensaDeLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Inexibilidade_de_Licitacao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 7 
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:InexibilidadeDeLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_Concurso> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 20
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Concurso;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .	
+
+<Licitacao_TomadaDePrecoPorTecnicaEPreco> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 22
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:TomadaDePreco, ardo:TecnicaEPreco;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_ConcorrenciaPorTecnicaEPreco> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 33
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Concorrencia, ardo:TecnicaEPreco;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_ConcorrenciaInternacionalPorTecnicaEPreco> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 44
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:ConcorrenciaInternacional, ardo:TecnicaEPreco;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .
+
+<Licitacao_RDC> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM licitacoes_do_ceara
+				WHERE modalidade = 99
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:RegimeDiferenciadoDeContratacao;
+			rr:template "http://www.arida.com/siasg/resources/Licitacao/{identificador}"
+		] .

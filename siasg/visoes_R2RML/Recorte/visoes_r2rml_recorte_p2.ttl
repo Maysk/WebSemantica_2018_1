@@ -1,0 +1,147 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+
+## Classe "FORNECEDOR PJ"
+<FornecedorPJ> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cnpj IS NOT NULL
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Fornecedor, ardo:PessoaJuridica, ardo:FornecedorPJ;
+			rr:template "http://www.arida.com/siasg/resources/Pessoa/{cnpj}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:sicaf_id;
+			rr:objectMap [rr:column '"id"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_fornecedor;
+			rr:objectMap [rr:column '"nome"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cnpj;
+			rr:objectMap [rr:column '"cnpj"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temMunicipio;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Municipio/{id_municipio}" ]
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cadastradoPor;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/UASG/{id_unidade_cadastradora}" ]
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temRamoDeNegocio;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/RamoDeNegocio/{id_ramo_negocio}" ]
+		];  
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temNaturezaJuridica;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/NaturezaJuridica/{id_natureza_juridica}" ]
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temPorte;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/PorteDaEmpresa/{id_porte_empresa}" ]
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cnaePrimario;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/CNAE/{id_cnae}" ]
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cnaeSecundario;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/CNAE/{id_cnae2}" ]
+		]; 
+	.
+
+<FornecedorPJ_Ativo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cnpj IS NOT NULL and ativo is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:FornecedorAtivo;
+			rr:template "http://www.arida.com/siasg/resources/Pessoa/{cnpj}"
+		] .
+
+<FornecedorPJ_Inativo> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cnpj IS NOT NULL and ativo is false
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:FornecedorInativo;
+			rr:template "http://www.arida.com/siasg/resources/Pessoa/{cnpj}"
+		] .
+
+<FornecedorPJ_Recadastrado> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cnpj IS NOT NULL and recadastrado is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Recadastrado;
+			rr:template "http://www.arida.com/siasg/resources/Pessoa/{cnpj}"
+		] .
+
+<FornecedorPJ_HabilitadoALicitar> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM fornecedores
+				WHERE cnpj IS NOT NULL and habilitado_licitar is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:HabilitadoALicitar;
+			rr:template "http://www.arida.com/siasg/resources/Pessoa/{cnpj}"
+		] .
+

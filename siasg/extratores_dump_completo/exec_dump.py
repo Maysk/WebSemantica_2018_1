@@ -31,6 +31,8 @@ error = aux.dump_orgaos() and error
 error = aux.dump_irps() and error
 error = aux.dump_precos_praticados() and error
 error = aux.dump_registros_preco() and error
+error = aux.dump_item_licitacao() and error
+
 
 error = aux.dump_classes() and error
 error = aux.dump_grupos() and error
@@ -46,11 +48,13 @@ error = aux.dump_subclasses_servicos() and error
 error = aux.dump_servicos() and error
 
 
-#error = aux.dump_compras_sem_licitacao() and error
+error = aux.dump_contratos() and error
+error = aux.dump_tipos_contrato() and error
+
+
+error = aux.dump_compras_sem_licitacao() and error
 #error = aux.dump_itens_compras_sem_licitacao() and error
 #TODO rdcs
-
-error = aux.dump_contratos() and error
 
 
 error = aux.dump_cnaes() and error
@@ -59,8 +63,8 @@ error = aux.dump_ramos_negocio() and error
 error = aux.dump_portes_empresa() and error
 error = aux.dump_linhas_fornecimento() and error
 error = aux.dump_fornecedores() and error
+error = aux.dump_naturezas_juridicas() and error
 error = aux.dump_ocorrencias_fornecedores() and error
-
 
 
 print("\n\n")

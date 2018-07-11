@@ -179,6 +179,96 @@ def dump_modalidades_licitacoes():
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
 
+def dump_item_licitacao():
+	url_entidade = "http://compras.dados.gov.br/licitacoes/doc/licitacao/{}/itens.json?offset={}"
+
+	elemento_json = "itensLicitacao"
+
+	nome_da_tabela = "item_licitacao"
+
+	atributos_validos = ['beneficio', 'cnpj_fornecedor', 'codigo_item_material', 
+							'codigo_item_servico', 'cpfVencedor', 'criterio_julgamento', 
+							'decreto_7174', 'descricao_item', 'modalidade', 'numero_aviso', 
+							'numero_item_licitacao', 'numero_licitacao', 'quantidade', 
+							'sustentavel', 'uasg', 'unidade', 'valor_estimado' ]
+
+
+	licitacoes_do_ceara = db.get_licitacoes_do_ceara()
+
+	logger.info("Iniciou Funcao DumpTabela: {}".format(nome_da_tabela))
+
+	if(not db.tabela_ja_criada(nome_da_tabela)):
+		logger.info("Tabela {} não existe. Sugestão: Crie a tabela {}".format(nome_da_tabela, nome_da_tabela))
+		return False
+	elif(db.tabela_ja_povoada(nome_da_tabela)):
+		logger.info("Tabela {} já foi povoada anteriormente.".format(nome_da_tabela))
+		return True
+	else:
+		logger.info("Dump {} vai começar:".format(nome_da_tabela))
+		print("\n\nDump {} vai começar:".format(nome_da_tabela))
+		
+		flush_len = 10000
+		licitacao_counter = 0
+		numero_total_de_licitacoes = len(licitacoes_do_ceara)
+		print("Quantidade total de Licitacoes: {}".format(numero_total_de_licitacoes))
+		logger.info("Quantidade total de Licitacoes: {}".format(numero_total_de_licitacoes))
+		
+		for licitacao in licitacoes_do_ceara:
+			offset = 0
+			url = url_entidade.format(licitacao[0], offset)
+			req = requests.get(url)
+			json_ = req.json()
+			#print(url)
+			licitacao_counter = licitacao_counter + 1
+			if(licitacao_counter % 500 == 0):
+				print("Inseriu até Licitacao {}".format(licitacao_counter))
+				logger.info("Inseriu até Licitacao {}".format(licitacao_counter))
+
+			if (json_['_embedded'][elemento_json] != []):
+				limit = json_['count']
+				resultset = []
+				
+				flush_counter = 0
+				while( offset < limit ):
+					url = url_entidade.format(licitacao[0], offset)
+					#print(url)
+					try:
+						req = requests.get(url)
+						json_ = req.json()
+						for i in range(len(json_['_embedded'][elemento_json])):
+							h = {key:value for (key, value) in json_['_embedded'][elemento_json][i].items() if (key in atributos_validos) }
+
+							h.update({key:None for key in atributos_validos if key not in json_['_embedded'][elemento_json][i].keys()})
+							
+							resultset.append(h)
+							flush_counter = flush_counter + 1
+
+						if(flush_counter == flush_len):
+							db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
+							resultset = []	
+							flush_counter = 0
+
+					except Exception as error:
+						logger.error("Tabela {} - Timeout at 'Licitacao' {} offset {}".format(nome_da_tabela, licitacao[0], offset))
+						logger.error("Error: {}".format(error))	
+
+					offset = offset + 500
+
+				if(len(resultset) > 0):
+					db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
+
+
+
+		print("Inseriu até Licitacao {}".format(licitacao_counter))
+		logger.info("Inseriu até Licitacao {}".format(licitacao_counter))
+		logger.info("Terminou Extração de {}".format(nome_da_tabela))
+		db.insere_tabela_povoada(nome_da_tabela)
+		logger.info("Gravou {} em 'tabelas_ja_povoadas'".format(nome_da_tabela))
+
+		return True
+
+
+		
 
 
 ################################################################
@@ -196,10 +286,25 @@ def dump_contratos():
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
+def dump_tipos_contrato():
+	url_ = "http://compras.dados.gov.br/contratos/v1/tipos_contrato.json?offset={}"
+
+	elemento_json = "TiposContrato"
+
+	nome_da_tabela = "tipos_contrato"
+
+	atributos_considerados = ['codigo', 'descricao']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
 
 ################################################################
 ###################### MODULO FORNECEDORES #####################
 ################################################################
+
+#TODO: - tipos_ocorrencia, ambito_ocorrencia, prazos_ocorrencia
+#	   - Ligar linhas_fornecimento ao fornecedor
 
 def dump_cnaes():
 	url_ = "http://compras.dados.gov.br/fornecedores/v1/cnaes.json?offset={}"
@@ -211,7 +316,6 @@ def dump_cnaes():
 	atributos_considerados = ['id', 'descricao', 'codigo_longo']
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
-
 
 def dump_municipios():
 	url_ = "http://compras.dados.gov.br/fornecedores/v1/municipios.json?offset={}"
@@ -246,6 +350,16 @@ def dump_portes_empresa():
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
+def dump_naturezas_juridicas():
+	url_ = "http://compras.dados.gov.br/fornecedores/v1/naturezas_juridicas.json?offset={}"
+
+	elemento_json = "naturezasJuridicas"
+
+	nome_da_tabela = "naturezas_juridicas"
+
+	atributos_considerados = ['id', 'codigo', 'descricao', 'ativo']
+
+	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
 
 def dump_linhas_fornecimento():
 	url_ = "http://compras.dados.gov.br/fornecedores/v1/linhas_fornecimento.json?offset={}"
@@ -257,7 +371,6 @@ def dump_linhas_fornecimento():
 	atributos_considerados = ['ativo', 'id', 'tipo', 'codigo_material', 'codigo_servico']
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
-
 
 def dump_fornecedores():
 	url_ = "http://compras.dados.gov.br/fornecedores/v1/fornecedores.json?offset={}"
@@ -272,7 +385,6 @@ def dump_fornecedores():
 							'recadastrado', 'uf']
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
-
 
 def dump_ocorrencias_fornecedores():
 	url_ = "http://compras.dados.gov.br/fornecedores/v1/ocorrencias_fornecedores.json?offset={}"

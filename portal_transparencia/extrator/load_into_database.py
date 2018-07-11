@@ -39,11 +39,12 @@ print(len(files_names))
 i = 0
 while i < len(files_names):
 	print(i)
-	load_csv_into_table(base_path + '\\working_area\\' + files_names[i], 'item_licitacao')
+	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i], 'item_licitacao')
 	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i+1], 'licitacao')
-	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i+2], 'participante_licitacao')	
+	load_csv_into_table(base_path + '\\working_area\\' + files_names[i], 'participante_licitacao')	
 	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i], 'contratos')
 	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i+1], 'item_compra')
 	#load_csv_into_table(base_path + '\\working_area\\' + files_names[i+2], 'termo_aditivo')	
-	i=i+3
+	#i=i+3
+	i=i+1
 
