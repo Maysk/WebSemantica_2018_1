@@ -34,7 +34,7 @@ def dump_tabela(url_entidade, elemento_json, nome_da_tabela, atributos_validos):
 		
 		resultset = []
 
-		flush_len = 10000
+		flush_len = 50000
 		flush_counter = 0
 
 		while( offset < limit ):
@@ -404,7 +404,7 @@ def dump_ocorrencias_fornecedores():
 ################# MODULO COMPRAS SEM LICITACAO #################
 ################################################################
 
-
+#TODO: Incluir identificador da compra nos atributos
 def dump_compras_sem_licitacao():
 	url_ = "http://compras.dados.gov.br/compraSemLicitacao/v1/compras_slicitacao.json?offset={}"
 
@@ -418,6 +418,177 @@ def dump_compras_sem_licitacao():
 							'nu_inciso', 'nu_processo', 'nu_aviso_licitacao', 'qt_total_item', 'vr_estimado']
 
 	return dump_tabela(url_, elemento_json, nome_da_tabela, atributos_considerados)
+
+
+
+##TODO: Metodo provisorio para o trabalho
+def dump_compras_sem_licitacao_do_ceara():
+
+	url_ = "http://compras.dados.gov.br/compraSemLicitacao/v1/compras_slicitacao.json?co_uasg={}&offset={}"
+
+	elemento_json = "compras"
+
+	nome_da_tabela = "compras_sem_licitacao_do_ceara"
+
+	atributos_validos = ['co_modalidade_licitacao', 'co_orgao', 'co_uasg', 'ds_fundamento_legal', 'ds_justificativa', 
+							'ds_lei', 'ds_objeto_licitacao', 'dtPublicacao', 'dtRatificacao', 'dtDeclaracaoDispensa', 
+							'no_cargo_resp_decl_disp', 'no_cargo_resp_ratificacao', 'no_responsavel_decl_disp', 'no_responsavel_ratificacao', 
+							'nu_inciso', 'nu_processo', 'nu_aviso_licitacao', 'qt_total_item', 'vr_estimado', 'identificador_compras']
+	
+	uasgs_do_ceara = db.get_uasgs_do_ceara()
+
+	logger.info("Iniciou Funcao DumpTabela: {}".format(nome_da_tabela))
+
+	if(not db.tabela_ja_criada(nome_da_tabela)):
+		logger.info("Tabela {} não existe. Sugestão: Crie a tabela {}".format(nome_da_tabela, nome_da_tabela))
+		return False
+	elif(db.tabela_ja_povoada(nome_da_tabela)):
+		logger.info("Tabela {} já foi povoada anteriormente.".format(nome_da_tabela))
+		return True
+	else:
+		logger.info("Dump {} vai começar:".format(nome_da_tabela))
+		print("\n\nDump {} vai começar:".format(nome_da_tabela))
+
+		flush_len = 10000
+		resultset = []
+		flush_counter = 0
+
+		for uasg in uasgs_do_ceara:
+			print("Inserindo compras de uasg {}".format(uasg))
+			offset = 0
+			url = url_.format(uasg[0], offset)
+			req = requests.get(url)
+			json_ = req.json()
+			
+			if (json_['_embedded'][elemento_json] != []):
+				limit = json_['count']
+				while( offset < limit ):
+					url = url_.format(uasg[0], offset)
+					try:
+						req = requests.get(url)
+						json_ = req.json()
+
+						for i in range(len(json_['_embedded'][elemento_json])):
+							h = {key:value for (key, value) in json_['_embedded'][elemento_json][i].items() if (key in atributos_validos) }
+
+							h.update({key:None for key in atributos_validos if key not in json_['_embedded'][elemento_json][i].keys()})
+
+							h['identificador_compras'] = json_['_embedded'][elemento_json][i]['_links']['self']['href'].replace('/compraSemLicitacao/id/compra_slicitacao/', '')
+							
+							resultset.append(h)
+							flush_counter = flush_counter + 1
+
+						if(flush_counter == flush_len):
+							db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
+							resultset = []	
+							flush_counter = 0
+
+					except Exception as error:
+						logger.error("Tabela {} - Timeout at 'UASG' {} offset {}".format(nome_da_tabela, uasg[0], offset))
+						logger.error("Error: {}".format(error))	
+
+					offset = offset + 500
+
+		if(len(resultset) > 0):
+			db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
+
+
+		logger.info("Terminou Extração de {}".format(nome_da_tabela))
+		db.insere_tabela_povoada(nome_da_tabela)
+		logger.info("Gravou {} em 'tabelas_ja_povoadas'".format(nome_da_tabela))
+
+		return True
+
+
+
+
+
+def dump_compras_sem_licitacao_do_ceara_item():
+
+	url_ = "http://compras.dados.gov.br/compraSemLicitacao/doc/item_slicitacao/{}/itens.json?offset={}"
+
+	elemento_json = "compras"
+
+	nome_da_tabela = "compras_sem_licitacao_do_ceara_item"
+
+	atributos_validos = ['co_conjunto_materiais', 'co_servico', 'ds_detalhada', 'ds_tipo_fornecedor_vencedor', 'fornecedor', 'no_conjunto_materiais', 'no_marca_material', 'no_servico', 'no_unidade_medida', 'nu_cnpj_vencedor', 'nu_cpf_vencedor', 'qt_material_alt', 'vr_estimado', 'identificador_compras']
+
+	
+	lista_de_compras_sem_licitacao = db.get_compras_sem_licitacao_do_ceara()
+
+	logger.info("Iniciou Funcao DumpTabela: {}".format(nome_da_tabela))
+
+	if(not db.tabela_ja_criada(nome_da_tabela)):
+		logger.info("Tabela {} não existe. Sugestão: Crie a tabela {}".format(nome_da_tabela, nome_da_tabela))
+		return False
+	elif(db.tabela_ja_povoada(nome_da_tabela)):
+		logger.info("Tabela {} já foi povoada anteriormente.".format(nome_da_tabela))
+		return True
+	else:
+		logger.info("Dump {} vai começar:".format(nome_da_tabela))
+		print("\n\nDump {} vai começar:".format(nome_da_tabela))
+
+		flush_len = 10000
+		resultset = []
+		flush_counter = 0
+
+		compra_counter = 0
+		print("Total de compras: {}".format(len(lista_de_compras_sem_licitacao)))
+
+		for compra in lista_de_compras_sem_licitacao:
+			
+			if (compra_counter % 5000 == 0):
+				print("Passou pela compra {}".format(compra_counter))
+
+			offset = 0
+			url = url_.format(compra[0], offset)
+			req = requests.get(url)
+			json_ = req.json()
+			
+			compra_counter = compra_counter + 1
+
+			if (json_['_embedded'][elemento_json] != []):
+				limit = json_['count']
+				while( offset < limit ):
+					url = url_.format(compra[0], offset)
+					try:
+						req = requests.get(url)
+						json_ = req.json()
+
+						for i in range(len(json_['_embedded'][elemento_json])):
+							h = {key:value for (key, value) in json_['_embedded'][elemento_json][i].items() if (key in atributos_validos) }
+
+							h.update({key:None for key in atributos_validos if key not in json_['_embedded'][elemento_json][i].keys()})
+							
+							h['identificador_compras'] = compras[0]
+
+							resultset.append(h)
+							flush_counter = flush_counter + 1
+
+						if(flush_counter == flush_len):
+							db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
+							resultset = []	
+							flush_counter = 0
+							print("Flush...")
+
+					except Exception as error:
+						logger.error("Tabela {} - Timeout at 'compra' {} offset {}".format(nome_da_tabela, compra[0], offset))
+						logger.error("Error: {}".format(error))	
+
+					offset = offset + 500
+
+		if(len(resultset) > 0):
+			db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
+
+
+		logger.info("Terminou Extração de {}".format(nome_da_tabela))
+		db.insere_tabela_povoada(nome_da_tabela)
+		logger.info("Gravou {} em 'tabelas_ja_povoadas'".format(nome_da_tabela))
+
+		return True
+
+
+
 
 
 def dump_itens_compras_sem_licitacao():

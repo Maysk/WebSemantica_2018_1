@@ -52,7 +52,9 @@ error = aux.dump_contratos() and error
 error = aux.dump_tipos_contrato() and error
 
 
-error = aux.dump_compras_sem_licitacao() and error
+error = aux.dump_compras_sem_licitacao_do_ceara() and error
+error = aux.dump_compras_sem_licitacao_do_ceara_item() and error
+#error = aux.dump_compras_sem_licitacao() and error
 #error = aux.dump_itens_compras_sem_licitacao() and error
 #TODO rdcs
 

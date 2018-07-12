@@ -33,6 +33,24 @@ CREATE TABLE compras_sem_licitacao
     vr_estimado real
 )
 
+#Temporaria
+CREATE TABLE compras_sem_licitacao_do_ceara_item
+(
+    co_conjunto_materiais integer, 
+    co_servico integer,
+    ds_detalhada text,
+    ds_tipo_fornecedor_vencedor text,
+    fornecedor text,
+    no_conjunto_materiais text,
+    no_marca_material text, 
+    no_servico text,
+    no_unidade_medida text,
+    nu_cnpj_vencedor text,
+    nu_cpf_vencedor text, 
+    qt_material_alt text
+    vr_estimado real
+);
+
 --itens_compras_sem_licitacao	
 --	Link: http://compras.dados.gov.br/docs/compraSemLicitacao/v1/itens_compras_slicitacao.html
 
