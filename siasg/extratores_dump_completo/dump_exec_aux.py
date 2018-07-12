@@ -528,7 +528,7 @@ def dump_compras_sem_licitacao_do_ceara_item():
 		logger.info("Dump {} vai começar:".format(nome_da_tabela))
 		print("\n\nDump {} vai começar:".format(nome_da_tabela))
 
-		flush_len = 10000
+		flush_len = 50000
 		resultset = []
 		flush_counter = 0
 
@@ -537,7 +537,7 @@ def dump_compras_sem_licitacao_do_ceara_item():
 
 		for compra in lista_de_compras_sem_licitacao:
 			
-			if (compra_counter % 5000 == 0):
+			if (compra_counter % 500 == 0):
 				print("Passou pela compra {}".format(compra_counter))
 
 			offset = 0
@@ -546,21 +546,24 @@ def dump_compras_sem_licitacao_do_ceara_item():
 			json_ = req.json()
 			
 			compra_counter = compra_counter + 1
-
+			
 			if (json_['_embedded'][elemento_json] != []):
+				
 				limit = json_['count']
+				
 				while( offset < limit ):
 					url = url_.format(compra[0], offset)
 					try:
 						req = requests.get(url)
+						
 						json_ = req.json()
-
+						
 						for i in range(len(json_['_embedded'][elemento_json])):
 							h = {key:value for (key, value) in json_['_embedded'][elemento_json][i].items() if (key in atributos_validos) }
 
 							h.update({key:None for key in atributos_validos if key not in json_['_embedded'][elemento_json][i].keys()})
 							
-							h['identificador_compras'] = compras[0]
+							h['identificador_compras'] = compra[0]
 
 							resultset.append(h)
 							flush_counter = flush_counter + 1
