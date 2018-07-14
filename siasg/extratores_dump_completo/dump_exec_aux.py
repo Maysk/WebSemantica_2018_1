@@ -540,46 +540,50 @@ def dump_compras_sem_licitacao_do_ceara_item():
 			if (compra_counter % 500 == 0):
 				print("Passou pela compra {}".format(compra_counter))
 
-			offset = 0
-			url = url_.format(compra[0], offset)
-			req = requests.get(url)
-			json_ = req.json()
-			
-			compra_counter = compra_counter + 1
-			
-			if (json_['_embedded'][elemento_json] != []):
+			try:
+				offset = 0
+				compra_counter = compra_counter + 1
 				
-				limit = json_['count']
+				url = url_.format(compra[0], offset)
+				req = requests.get(url)
+				json_ = req.json()
 				
-				while( offset < limit ):
-					url = url_.format(compra[0], offset)
-					try:
-						req = requests.get(url)
-						
-						json_ = req.json()
-						
-						for i in range(len(json_['_embedded'][elemento_json])):
-							h = {key:value for (key, value) in json_['_embedded'][elemento_json][i].items() if (key in atributos_validos) }
-
-							h.update({key:None for key in atributos_validos if key not in json_['_embedded'][elemento_json][i].keys()})
+				
+				if (json_['_embedded'][elemento_json] != []):
+					
+					limit = json_['count']
+					
+					while( offset < limit ):
+						url = url_.format(compra[0], offset)
+						try:
+							req = requests.get(url)
 							
-							h['identificador_compras'] = compra[0]
+							json_ = req.json()
+							
+							for i in range(len(json_['_embedded'][elemento_json])):
+								h = {key:value for (key, value) in json_['_embedded'][elemento_json][i].items() if (key in atributos_validos) }
 
-							resultset.append(h)
-							flush_counter = flush_counter + 1
+								h.update({key:None for key in atributos_validos if key not in json_['_embedded'][elemento_json][i].keys()})
+								
+								h['identificador_compras'] = compra[0]
 
-						if(flush_counter == flush_len):
-							db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
-							resultset = []	
-							flush_counter = 0
-							print("Flush...")
+								resultset.append(h)
+								flush_counter = flush_counter + 1
 
-					except Exception as error:
-						logger.error("Tabela {} - Timeout at 'compra' {} offset {}".format(nome_da_tabela, compra[0], offset))
-						logger.error("Error: {}".format(error))	
+							if(flush_counter == flush_len):
+								db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
+								resultset = []	
+								flush_counter = 0
+								print("Flush...")
 
-					offset = offset + 500
+						except Exception as error:
+							logger.error("Tabela {} - Timeout at 'compra' {} offset {}".format(nome_da_tabela, compra[0], offset))
+							logger.error("Error: {}".format(error))	
 
+						offset = offset + 500
+			except Exception as error:
+				logger.error("Tabela {} - Timeout at 'compra' {} offset {}".format(nome_da_tabela, compra[0], offset))
+				logger.error("Error: {}".format(error))
 		if(len(resultset) > 0):
 			db.bulk_insert(resultset, atributos_validos, nome_da_tabela)
 
