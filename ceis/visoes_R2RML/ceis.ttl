@@ -7,7 +7,7 @@
 
 <PessoaJuridica> a rr:TripleMap;
 	rr:logicalTable [
-		rr:sqlQuery """SELECT cpf_ou_cnpj AS PJ_ID, nome_fantasia, nome_informado_pelo_sancionador, razao_social FROM ceis 
+		rr:sqlQuery """SELECT cpf_ou_cnpj AS pj_id, nome_fantasia, nome_informado_pelo_sancionador, razao_social FROM ceis 
 		WHERE tipo_pessoa = 'J'"""
 	];
 	rr:subjectMap [
@@ -38,7 +38,7 @@
 <PessoaFisica> a rr:TripleMap;
 	rr:logicalTable [
 		rr:sqlQuery """
-			SELECT cpf_ou_cnpj AS PF_ID, nome_informado_pelo_sancionador 
+			SELECT cpf_ou_cnpj AS pf_id, nome_informado_pelo_sancionador 
 			FROM ceis WHERE tipo_pessoa = 'F'
 		"""
 	];
@@ -59,7 +59,7 @@
 <SancaoAplicada> a rr:TripleMap;
 	rr:logicalTable [
 		rr:sqlQuery """
-			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao, data_inicio, data_final, fundamentacao, descricao_fundamentacao, abragencia 
+			SELECT numero_processo, cpf_ou_cnpj, tipo_sancao, data_inicio, data_final, fundamentacao, descricao_fundamentacao, abrangencia 
 			FROM ceis
 		"""
 	];
