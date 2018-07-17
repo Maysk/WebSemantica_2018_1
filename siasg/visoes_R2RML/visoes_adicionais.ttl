@@ -1,0 +1,352 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+
+
+## Classe "COMPRAS SEM LICITAÇÃO"
+<ComprasSemLicitacao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM compras_sem_licitacao
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:ComprasSemLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/ComprasSemLicitacao/{identificador_compras}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:identificador_compras;
+			rr:objectMap [rr:column '"identificador_compras"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:fundamento_legal;
+			rr:objectMap [rr:column '"ds_fundamento_legal"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:justificativa;
+			rr:objectMap [rr:column '"ds_justificativa"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:lei_modalidade;
+			rr:objectMap [rr:column '"ds_lei"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao_geral_compra;
+			rr:objectMap [rr:column '"ds_objeto_licitacao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:data_declaracao_dispensa;
+			rr:objectMap [rr:column '"dtdeclaracaodispensa"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:data_publicacao;
+			rr:objectMap [rr:column '"dtpublicacao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:data_ratificacao;
+			rr:objectMap [rr:column '"dtratificacao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_responsavel_pela_dispensa;
+			rr:objectMap [rr:column '"no_responsavel_decl_disp"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cargo_responsavel_pela_dispensa;
+			rr:objectMap [rr:column '"no_cargo_resp_decl_dispensa"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:nome_responsavel_pela_ratificacao;
+			rr:objectMap [rr:column '"no_responsavel_ratificacao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cargo_responsavel_pela_ratificacao;
+			rr:objectMap [rr:column '"no_cargo_resp_ratificacao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:numero_aviso;
+			rr:objectMap [rr:column '"nu_aviso_licitacao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:numero_inciso;
+			rr:objectMap [rr:column '"nu_inciso"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:numero_processo;
+			rr:objectMap [rr:column '"nu_processo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:quantidade_total_itens;
+			rr:objectMap [rr:column '"qt_total_item"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:valor_estimado;
+			rr:objectMap [rr:column '"vr_estimado"']
+		];
+
+	##rr:predicateObjectMap 
+
+	##	[
+	##		rr:predicate ardo:temItem;
+	##		rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/???" ]
+	##	]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:unidadeResponsavel;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UASG/{co_uasg}" ]
+		]
+
+	.
+
+## Classe "DISPENSA DE LICITAÇÃO"
+<DispensaDeLicitacao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao
+				WHERE co_modalidade_licitacao = 6 
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:DispensaDeLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/ComprasSemLicitacao/{identificador_compras}"
+		] 
+	.
+
+## Classe "INEXIBILIDADE DE LICITAÇÃO"
+<InexibilidadeDeLicitacao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao
+				WHERE co_modalidade_licitacao = 7 
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:InexibilidadeDeLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/ComprasSemLicitacao/{identificador_compras}"
+		] 
+	.
+
+## Classe "MATERIAL"
+<Material> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM materiais
+			"""
+		];
+		
+	rr:subjectMap
+		[
+			rr:class ardo:Material;
+			rr:template "http://www.arida.com/siasg/resources/Material/{codigo}"
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temGrupo;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/GrupoMaterial/{id_grupo}" ]
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temClasse;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/ClasseMaterial/{id_classe}" ]
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temPDM;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PDM/{id_pdm}" ]
+		]
+	.
+
+## Classe "GRUPO MATERIAL"
+<GrupoMaterial> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM grupos
+			"""
+		];
+
+	rr:subjectMap
+		[
+			rr:class ardo:GrupoMaterial;
+			rr:template "http://www.arida.com/siasg/resources/GrupoMaterial/{codigo}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		]
+	.
+
+## Classe "CLASSE MATERIAL"
+<ClasseMaterial> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM classes
+			"""
+		];
+
+	rr:subjectMap
+		[
+			rr:class ardo:ClasseMaterial;
+			rr:template "http://www.arida.com/siasg/resources/ClasseMaterial/{codigo}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temGrupo;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/GrupoMaterial/{codigo_grupo}" ]
+		]
+	.
+
+## Classe "PDM"
+<PDM> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM pdms
+			"""
+		];
+
+	rr:subjectMap
+		[
+			rr:class ardo:PDM;
+			rr:template "http://www.arida.com/siasg/resources/PDM/{codigo}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temClasse;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/ClasseMaterial/{codigo_classe}" ]
+		]
+	.
+	
+
+
+
+
