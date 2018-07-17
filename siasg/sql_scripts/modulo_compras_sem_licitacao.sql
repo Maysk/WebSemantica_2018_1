@@ -7,6 +7,7 @@
 
 CREATE TABLE compras_sem_licitacao
 (
+    identificador_compras text,
     co_modalidade_licitacao integer,
     co_orgao text,
     co_uasg integer,
@@ -36,6 +37,7 @@ CREATE TABLE compras_sem_licitacao
 #Temporaria
 CREATE TABLE compras_sem_licitacao_do_ceara_item
 (
+    identificador_compras text,
     co_conjunto_materiais integer, 
     co_servico integer,
     ds_detalhada text,
