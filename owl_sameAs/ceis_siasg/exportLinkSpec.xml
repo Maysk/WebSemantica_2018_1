@@ -1,0 +1,48 @@
+<Silk>
+<Prefixes>
+<Prefix id="rdf" namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+<Prefix id="rdfs" namespace="http://www.w3.org/2000/01/rdf-schema#"/>
+<Prefix id="owl" namespace="http://www.w3.org/2002/07/owl#"/>
+<Prefix id="ardo" namespace="http://www.arida.com/ontology/"/>
+</Prefixes>
+<DataSources>
+<Dataset id="ceis" type="file">
+<Param name="file" value="ceis_output.ttl"/>
+<Param name="format" value="N-Triples"/>
+<Param name="graph" value=""/>
+</Dataset>
+<Dataset id="siasg_PJ" type="file">
+<Param name="file" value="o_p2.ttl"/>
+<Param name="format" value="N-Triples"/>
+<Param name="graph" value=""/>
+</Dataset>
+</DataSources>
+<Interlinks>
+<Interlink id="ceis_pj">
+<SourceDataset dataSource="ceis" var="a" typeUri="http://www.arida.com/ontology/PessoaJuridica">
+<RestrictTo> </RestrictTo>
+</SourceDataset>
+<TargetDataset dataSource="siasg_PJ" var="b" typeUri="">
+<RestrictTo> </RestrictTo>
+</TargetDataset>
+<LinkageRule linkType="owl:sameAs">
+<Compare id="equality1" required="true" weight="1" metric="equality" threshold="0.0" indexing="true">
+<Input id="sourcePath1" path="/ardo:cnpj"/>
+<Input id="targetPath1" path="/ardo:cnpj"/>
+</Compare>
+<Filter/>
+</LinkageRule>
+<Outputs>
+<Output id="output_linking"/>
+</Outputs>
+</Interlink>
+</Interlinks>
+<Transforms> </Transforms>
+<Outputs>
+<Dataset id="output_linking" type="file">
+<Param name="file" value="output.ttl"/>
+<Param name="format" value="N-Triples"/>
+<Param name="graph" value=""/>
+</Dataset>
+</Outputs>
+</Silk>
