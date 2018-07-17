@@ -6,7 +6,7 @@
 	rr:logicalTable
 		[
 			rr:sqlQuery """
-				SELECT *
+				SELECT *, substring(cpfcontratada,1,11) AS cpf_anonimizado
 				FROM contratos_do_ceara
 			"""
 		];
@@ -98,19 +98,101 @@
 		[
 			rr:predicate ardo:temContratante;
 			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UASG/{uasg}" ]
-		]; 
+		]
+	.
 
+<temContratadoPJ> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM contratos_do_ceara
+				WHERE cnpj_contratada is not null
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/Contrato/{identificador}"
+		];
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:temContratado;
 			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Pessoa/{cnpj_contratada}" ]
-		]; 
+		] .
 
+<temContratadoPF> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				select substring(cpfcontratada,13) as id_sicaf_fornecedor, *
+				from contratos
+				where cpfcontratada is not null and cpfcontratada like '%:%'
+			"""
+		];
+	
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/Contrato/{identificador}"
+		];
+	
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:temContratado;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/FornecedorPF/{id_sicaf_fornecedor}" ]
+		] .
+
+
+<temContratadoPF_Geral> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				select substring(cpfcontratada,1,11) as cpf_anonimizado, *
+				from contratos
+				where cpfcontratada is not null and not (cpfcontratada like '%:%')
+			"""
+		];
+	
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/Contrato/{identificador}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temContratado_cpf;
 			rr:objectMap [ rr:column '"cpfcontratada"' ]
-		]
-	.
+		];
+	
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temContratado;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Pessoa_Anonimizada/{cpf_anonimizado}" ]
+		] .
+
+
+<PessoaAnonimizada> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				select distinct substring(cpfcontratada,1,11) as cpf_anonimizado, cpfcontratada
+				from contratos
+				where cpfcontratada is not null and not (cpfcontratada like '%:%')
+			"""
+		];
+	
+	rr:subjectMap
+		[
+			rr:class ardo:Pessoa_Anonimizada;
+			rr:template "http://www.arida.com/siasg/resources/Pessoa_Anonimizada/{cpf_anonimizado}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cpf_anonimizado;
+			rr:objectMap [ rr:column '"cpfcontratada"' ]
+		] .
