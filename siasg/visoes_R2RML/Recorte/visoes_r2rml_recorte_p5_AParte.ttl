@@ -35,7 +35,7 @@
     
     rr:predicateObjectMap 
 		[
-			rr:predicate ardo:temCpfSimiliar;
+			rr:predicate ardo:temCpfSimilar;
 			rr:objectMap [rr:template "http://www.arida.com/siasg/resources/Pessoa_Anonimizada/{cpf}"]
 		];
 
