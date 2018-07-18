@@ -84,7 +84,7 @@
 
 		[
 			rr:predicate ardo:cargo_responsavel_pela_dispensa;
-			rr:objectMap [rr:column '"no_cargo_resp_decl_dispensa"']
+			rr:objectMap [rr:column '"no_cargo_resp_decl_disp"']
 		];
 
 	rr:predicateObjectMap 

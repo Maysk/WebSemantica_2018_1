@@ -3,7 +3,8 @@ d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql:
 d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p3.ttl > output\o_p3.ttl
 d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p4.ttl > output\o_p4.ttl
 d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p5.ttl > output\o_p5.ttl
-d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p6.ttl > output\o_p6.ttl
+d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p6_a.ttl > output\o_p6_a.ttl
+d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p6_b.ttl > output\o_p6_b.ttl
 d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p7.ttl > output\o_p7.ttl
 d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p8.ttl > output\o_p8.ttl
 d2rq\d2rq-dev\dump-rdf.bat -u postgres -p 123456 -f n-triple -j jdbc:postgresql://localhost:5432/siasg_fulldump d2rq\mapping\visoes_r2rml_recorte_p9.ttl > output\o_p9.ttl

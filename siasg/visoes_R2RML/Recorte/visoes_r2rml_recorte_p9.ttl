@@ -15,7 +15,7 @@
 		
 	rr:subjectMap
 		[
-			rr:class ardo:ServicoCompra, ItemCompra;
+			rr:class ardo:ServicoCompra, ardo:ItemCompra;
 			rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_servico}"
 		]; 
 
@@ -143,7 +143,7 @@
 		
 	rr:subjectMap
 		[
-			rr:class ardo:MaterialCompra, ItemCompra;
+			rr:class ardo:MaterialCompra, ardo:ItemCompra;
 			rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_conjunto_materiais}"
 		]; 
 
