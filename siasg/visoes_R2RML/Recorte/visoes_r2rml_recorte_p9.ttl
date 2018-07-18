@@ -1,0 +1,264 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+
+
+<ItemCompra_servico> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao_do_ceara_item
+				where co_servico is not null
+			"""
+		];
+		
+	rr:subjectMap
+		[
+			rr:class ardo:ServicoCompra, ItemCompra;
+			rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_servico}"
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:identificador_compras;
+			rr:objectMap [rr:column '"identificador_compras"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:valor_estimado;
+			rr:objectMap [rr:column '"vr_estimado"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:quantidade;
+			rr:objectMap [rr:column '"qt_material_alt"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao_detalhada;
+			rr:objectMap [rr:column '"ds_detalhada"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:no_unidade_medida;
+			rr:objectMap [rr:column '"unidade_medida"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:instanciaDe;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Servico/{co_servico}" ]
+		]
+	.
+
+
+<ItemCompra_servico_cnpj> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao_do_ceara_item
+				where co_servico is not null and nu_cnpj_vencedor is not null
+			"""
+		];
+		
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_servico}"
+		]; 
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temVencedor;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Pessoa/{nu_cnpj_vencedor}" ]
+		] .
+
+
+<ItemCompra_servico_cpf> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao_do_ceara_item
+				where co_servico is not null and nu_cpf_vencedor is not null
+			"""
+		];
+		
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_servico}"
+		]; 
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temVencedor_cpf;
+			rr:objectMap [rr:column '"nu_cpf_vencedor"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temVencedor;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{nu_cpf_vencedor}" ]
+		] .
+
+
+<temItem_ItemCompra_servico> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao_do_ceara_item
+				where co_servico is not null
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/ComprasSemLicitacao/{identificador_compras}"
+		]; 
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temItem;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_servico}" ]
+		] .
+
+
+<ItemCompra_material> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao_do_ceara_item
+				where co_conjunto_materiais is not null
+			"""
+		];
+		
+	rr:subjectMap
+		[
+			rr:class ardo:MaterialCompra, ItemCompra;
+			rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_conjunto_materiais}"
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:identificador_compras;
+			rr:objectMap [rr:column '"identificador_compras"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:valor_estimado;
+			rr:objectMap [rr:column '"vr_estimado"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:quantidade;
+			rr:objectMap [rr:column '"qt_material_alt"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao_detalhada;
+			rr:objectMap [rr:column '"ds_detalhada"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:marca;
+			rr:objectMap [rr:column '"no_marca_material"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:no_unidade_medida;
+			rr:objectMap [rr:column '"unidade_medida"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:instanciaDe;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Material/{co_conjunto_materiais}" ]
+		]
+	.
+
+
+<ItemCompra_material_cnpj> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao_do_ceara_item
+				where co_conjunto_materiais is not null and nu_cnpj_vencedor is not null
+			"""
+		];
+		
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_conjunto_materiais}"
+		]; 
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temVencedor;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Pessoa/{nu_cnpj_vencedor}" ]
+		] .
+
+
+<ItemCompra_material_cpf> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao_do_ceara_item
+				where co_conjunto_materiais is not null and nu_cpf_vencedor is not null
+			"""
+		];
+		
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_conjunto_materiais}"
+		]; 
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temVencedor_cpf;
+			rr:objectMap [rr:column '"nu_cpf_vencedor"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temVencedor;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{nu_cpf_vencedor}" ]
+		] .
+
+
+<temItem_ItemCompra_material> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM compras_sem_licitacao_do_ceara_item
+				where co_conjunto_materiais is not null
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/ComprasSemLicitacao/{identificador_compras}"
+		]; 
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temItem;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/ItemCompra/{identificador_compras}#{co_conjunto_materiais}" ]
+		] .

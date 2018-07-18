@@ -1,0 +1,159 @@
+## Classe "MATERIAL"
+<Material> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM materiais
+			"""
+		];
+		
+	rr:subjectMap
+		[
+			rr:class ardo:Material;
+			rr:template "http://www.arida.com/siasg/resources/Material/{codigo}"
+		]; 
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temGrupo;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/GrupoMaterial/{id_grupo}" ]
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temClasse;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/ClasseMaterial/{id_classe}" ]
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temPDM;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PDM/{id_pdm}" ]
+		]
+	.
+
+## Classe "GRUPO MATERIAL"
+<GrupoMaterial> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM grupos
+			"""
+		];
+
+	rr:subjectMap
+		[
+			rr:class ardo:GrupoMaterial;
+			rr:template "http://www.arida.com/siasg/resources/GrupoMaterial/{codigo}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		]
+	.
+
+## Classe "CLASSE MATERIAL"
+<ClasseMaterial> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM classes
+			"""
+		];
+
+	rr:subjectMap
+		[
+			rr:class ardo:ClasseMaterial;
+			rr:template "http://www.arida.com/siasg/resources/ClasseMaterial/{codigo}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temGrupo;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/GrupoMaterial/{codigo_grupo}" ]
+		]
+	.
+
+## Classe "PDM"
+<PDM> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM pdms
+			"""
+		];
+
+	rr:subjectMap
+		[
+			rr:class ardo:PDM;
+			rr:template "http://www.arida.com/siasg/resources/PDM/{codigo}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temClasse;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/ClasseMaterial/{codigo_classe}" ]
+		]
+	.
+	

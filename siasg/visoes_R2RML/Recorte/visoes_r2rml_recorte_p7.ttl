@@ -1,0 +1,157 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+<ItemLicitacao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM item_licitacao
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:ItemLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/ItemLicitacao/{numero_licitacao}#{numero_item_licitacao}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:beneficio;
+			rr:objectMap [rr:column '"beneficio"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:valor_estimado;
+			rr:objectMap [rr:column '"valor_estimado"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:unidade;
+			rr:objectMap [rr:column '"unidade"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:numero_item_licitacao;
+			rr:objectMap [rr:column '"numero_item_licitacao"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:numero_licitacao;
+			rr:objectMap [rr:column '"numero_licitacao"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao_item;
+			rr:objectMap [rr:column '"descricao_item"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:criterio_julgamento;
+			rr:objectMap [rr:column '"criterio_julgamento"']
+		] .
+
+<ItemLicitacao_sustentavel> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM item_licitacao
+				WHERE sustentavel is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Sustentavel;
+			rr:template "http://www.arida.com/siasg/resources/ItemLicitacao/{numero_licitacao}#{numero_item_licitacao}"
+		] .
+
+
+<ItemLicitacao_decreto_7174> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM item_licitacao
+				WHERE decreto_7174 is true
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Decreto_7174;
+			rr:template "http://www.arida.com/siasg/resources/ItemLicitacao/{numero_licitacao}#{numero_item_licitacao}"
+		] .
+
+
+
+<ItemLicitacao_Material> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM item_licitacao
+				WHERE codigo_item_material is not null
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:MaterialLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/ItemLicitacao/{numero_licitacao}#{numero_item_licitacao}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:instanciaDe;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Material/{codigo_item_material}" ]
+		] .
+
+<ItemLicitacao_Servico> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM item_licitacao
+				WHERE codigo_item_servico is not null
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:ServicoLicitacao;
+			rr:template "http://www.arida.com/siasg/resources/ItemLicitacao/{numero_licitacao}#{numero_item_licitacao}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:instanciaDe;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Servico/{codigo_item_servico}" ]
+		] .
+
+
+<temVencedor_CNPJ> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM item_licitacao
+				WHERE cnpj_fornecedor is not null
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:template "http://www.arida.com/siasg/resources/ItemLicitacao/{numero_licitacao}#{numero_item_licitacao}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temVencedor;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Pessoa/{cnpj_fornecedor}" ]
+		] .
+

@@ -1,0 +1,234 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ardo: <http://www.arida.com/ontology/> .
+
+
+<Servicos> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM servicos
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Servico;
+			rr:template "http://www.arida.com/siasg/resources/Servico/{codigo}"
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cpc;
+			rr:objectMap [rr:column '"cpc"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:unidade_medida;
+			rr:objectMap [rr:column '"unidade_medida"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temSecao;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/SecaoServico/{codigo_secao}" ]
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temDivisao;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/DivisaoServico/{codigo_divisao}" ]
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temGrupo;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/GrupoServico/{codigo_grupo}" ]
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temClasse;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/ClasseServico/{codigo_classe}" ]
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temSubclasse;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/SubclasseServico/{codigo_subclasse}" ]
+		] .
+
+<SecoesServicos> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM secoes_servicos
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:SecaoServico;
+			rr:template "http://www.arida.com/siasg/resources/SecaoServico/{codigo}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		] .
+
+<DivisoesServicos> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM divisoes_servicos
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:DivisaoServico;
+			rr:template "http://www.arida.com/siasg/resources/DivisaoServico/{codigo}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temDivisao;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/SecaoServico/{codigo_secao}" ]
+		] .
+
+<GruposServicos> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM grupos_servicos
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:GrupoServico;
+			rr:template "http://www.arida.com/siasg/resources/GrupoServico/{codigo}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temDivisao;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/DivisaoServico/{codigo_divisao}" ]
+		] .
+
+<ClassesServico> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM classes_servicos
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:ClasseServico;
+			rr:template "http://www.arida.com/siasg/resources/ClasseServico/{codigo}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temGrupo;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/GrupoServico/{codigo_grupo}" ]
+		] .
+
+<SubclassesServicos> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT * 
+				FROM subclasses_servicos
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:SubclasseServico;
+			rr:template "http://www.arida.com/siasg/resources/SubclasseServico/{codigo}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:codigo;
+			rr:objectMap [rr:column '"codigo"']
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:descricao;
+			rr:objectMap [rr:column '"descricao"']
+		];
+
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:temClasse;
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/ClasseServico/{codigo_classe}" ]
+		] .
+

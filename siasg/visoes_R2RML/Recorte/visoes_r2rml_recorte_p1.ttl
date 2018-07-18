@@ -1,6 +1,7 @@
 @prefix rr: <http://www.w3.org/ns/r2rml#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ardo: <http://www.arida.com/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 <Contrato> a rr:TripleMap;
 	rr:logicalTable
@@ -98,6 +99,12 @@
 		[
 			rr:predicate ardo:temContratante;
 			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UASG/{uasg}" ]
+		];
+
+	rr:predicateObjectMap 
+		[
+			rr:predicate rdf:type;
+			rr:objectMap [ rr:template "http://www.arida.com/ontology/Contrato#{codigo_contrato}" ]
 		]
 	.
 
@@ -174,25 +181,3 @@
 		] .
 
 
-<PessoaAnonimizada> a rr:TripleMap;
-	rr:logicalTable
-		[
-			rr:sqlQuery """
-				select distinct substring(cpfcontratada,1,11) as cpf_anonimizado, cpfcontratada
-				from contratos
-				where cpfcontratada is not null and not (cpfcontratada like '%:%')
-			"""
-		];
-	
-	rr:subjectMap
-		[
-			rr:class ardo:Pessoa_Anonimizada;
-			rr:template "http://www.arida.com/siasg/resources/Pessoa_Anonimizada/{cpf_anonimizado}"
-		];
-
-	rr:predicateObjectMap 
-
-		[
-			rr:predicate ardo:cpf_anonimizado;
-			rr:objectMap [ rr:column '"cpfcontratada"' ]
-		] .
