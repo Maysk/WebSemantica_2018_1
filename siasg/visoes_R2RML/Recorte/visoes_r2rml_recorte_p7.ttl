@@ -31,7 +31,7 @@
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:unidade;
+			rr:predicate ardo:unidade_medida;
 			rr:objectMap [rr:column '"unidade"']
 		];
 	rr:predicateObjectMap 
