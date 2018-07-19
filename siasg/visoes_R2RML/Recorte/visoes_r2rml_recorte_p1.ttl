@@ -99,14 +99,84 @@
 		[
 			rr:predicate ardo:temContratante;
 			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UASG/{uasg}" ]
-		];
+		] .
 
-	rr:predicateObjectMap 
+
+<Credenciamento> a rr:TripleMap;
+	rr:logicalTable
 		[
-			rr:predicate rdf:type;
-			rr:objectMap [ rr:template "http://www.arida.com/ontology/Contrato#{codigo_contrato}" ]
-		]
-	.
+			rr:sqlQuery """
+				SELECT *
+				FROM contratos_do_ceara
+				WHERE codigo_contrato = '51'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Credenciamento;
+			rr:template "http://www.arida.com/siasg/resources/Contrato/{identificador}"
+		] .
+
+<Convenio> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM contratos_do_ceara
+				WHERE codigo_contrato = '57'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Convenio;
+			rr:template "http://www.arida.com/siasg/resources/Contrato/{identificador}"
+		] .
+
+<Arrendamento> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM contratos_do_ceara
+				WHERE codigo_contrato = '53'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Convenio;
+			rr:template "http://www.arida.com/siasg/resources/Contrato/{identificador}"
+		] .
+
+<Concessao> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM contratos_do_ceara
+				WHERE codigo_contrato = '54'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Concessao;
+			rr:template "http://www.arida.com/siasg/resources/Contrato/{identificador}"
+		] .
+
+<Comodato> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT *
+				FROM contratos_do_ceara
+				WHERE codigo_contrato = '52'
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:Comodato;
+			rr:template "http://www.arida.com/siasg/resources/Contrato/{identificador}"
+		] .
+
 
 <temContratadoPJ> a rr:TripleMap;
 	rr:logicalTable

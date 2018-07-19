@@ -48,8 +48,8 @@
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:no_unidade_medida;
-			rr:objectMap [rr:column '"unidade_medida"']
+			rr:predicate ardo:unidade_medida;
+			rr:objectMap [rr:column '"no_unidade_medida"']
 		];
 	rr:predicateObjectMap 
 
@@ -181,8 +181,8 @@
 	rr:predicateObjectMap 
 
 		[
-			rr:predicate ardo:no_unidade_medida;
-			rr:objectMap [rr:column '"unidade_medida"']
+			rr:predicate ardo:unidade_medida;
+			rr:objectMap [rr:column '"no_unidade_medida"']
 		];
 	rr:predicateObjectMap 
 
