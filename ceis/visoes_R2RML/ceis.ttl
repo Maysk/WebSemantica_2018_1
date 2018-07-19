@@ -218,7 +218,7 @@
 		];
 	rr:predicateObjectMap
 		[
-			rr:predicate ardo:geradaPelo;
+			rr:predicate ardo:aplicadaSobre;
 			rr:objectMap [ rr:template "http://www.arida.com/ceis/resource/Pessoa/{cpf_ou_cnpj}" ]
 		]
 	.
