@@ -1,0 +1,43 @@
+<Silk>
+        <Prefixes>
+      <Prefix id="rdf" namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/><Prefix id="rdfs" namespace="http://www.w3.org/2000/01/rdf-schema#"/><Prefix id="owl" namespace="http://www.w3.org/2002/07/owl#"/><Prefix id="ardo" namespace="http://www.arida.com/ontology/"/>
+    </Prefixes>
+        <DataSources>
+          <Dataset id="cnep_dump" type="file">
+            <Param name="file" value="cnep_output.ttl"/><Param name="format" value="N-Triples"/><Param name="graph" value=""/>
+          </Dataset><Dataset id="siasg_pj" type="file">
+            <Param name="file" value="o_p2.ttl"/><Param name="format" value="N-Triples"/><Param name="graph" value=""/>
+          </Dataset>
+        </DataSources>
+        <Interlinks>
+          <Interlink id="cnep_siasg_pj">
+        <SourceDataset dataSource="cnep_dump" var="a" typeUri="http://www.arida.com/ontology/PessoaJuridica">
+        <RestrictTo>
+          
+        </RestrictTo>
+      </SourceDataset>
+        <TargetDataset dataSource="siasg_pj" var="b" typeUri="http://www.arida.com/ontology/PessoaJuridica">
+        <RestrictTo>
+          
+        </RestrictTo>
+      </TargetDataset>
+        <LinkageRule linkType="owl:sameAs">
+        <Compare id="equality1" required="true" weight="1" metric="equality" threshold="0.0" indexing="true">
+            <Input id="cnep_cnpj" path="/ardo:cnpj"/><Input id="siasg_cnpj" path="/ardo:cnpj"/>
+          </Compare>
+        <Filter/>
+      </LinkageRule>
+        <Outputs>
+          <Output id="output"></Output>
+        </Outputs>
+      </Interlink>
+        </Interlinks>
+        <Transforms>
+          
+        </Transforms>
+        <Outputs>
+          <Dataset id="output" type="file">
+            <Param name="file" value="output_cnep_siasg_pj.ttl"/><Param name="format" value="N-Triples"/><Param name="graph" value=""/>
+          </Dataset>
+        </Outputs>
+      </Silk>
