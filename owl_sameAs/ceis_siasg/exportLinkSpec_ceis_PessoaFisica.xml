@@ -1,0 +1,56 @@
+<Silk>
+<Prefixes>
+<Prefix id="rdf" namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+<Prefix id="rdfs" namespace="http://www.w3.org/2000/01/rdf-schema#"/>
+<Prefix id="owl" namespace="http://www.w3.org/2002/07/owl#"/>
+<Prefix id="ardo" namespace="http://www.arida.com/ontology/"/>
+</Prefixes>
+<DataSources>
+<Dataset id="ceis" type="file">
+<Param name="file" value="ceis_output.ttl"/>
+<Param name="format" value="N-Triples"/>
+<Param name="graph" value=""/>
+</Dataset>
+<Dataset id="siasg_pessoa_fisica" type="file">
+<Param name="file" value="o_p5_pedaco.ttl"/>
+<Param name="format" value="N-Triples"/>
+<Param name="graph" value=""/>
+</Dataset>
+</DataSources>
+<Interlinks>
+<Interlink id="sameAs_pessoa_fisica_ceis">
+<SourceDataset dataSource="ceis" var="a" typeUri="">
+<RestrictTo> </RestrictTo>
+</SourceDataset>
+<TargetDataset dataSource="siasg_pessoa_fisica" var="b" typeUri="">
+<RestrictTo> </RestrictTo>
+</TargetDataset>
+<LinkageRule linkType="owl:sameAs">
+<Aggregate id="average1" required="true" weight="1" type="average">
+<Compare id="levenshteinDistance1" required="true" weight="10" metric="levenshteinDistance" threshold="5.0" indexing="true">
+<Input id="sourcePath1" path="/ardo:cpf"/>
+<Input id="targetPath1" path="/ardo:cpf_anonimizado"/>
+<Param name="minChar" value="0"/>
+<Param name="maxChar" value="z"/>
+</Compare>
+<Compare id="jaroWinkler1" required="true" weight="1" metric="jaroWinkler" threshold="0.95" indexing="true">
+<Input id="nome_informado" path="/ardo:nome_informado"/>
+<Input id="nome" path="/ardo:nome"/>
+</Compare>
+</Aggregate>
+<Filter limit="1"/>
+</LinkageRule>
+<Outputs>
+<Output id="sameAs_pessoa_fisica"/>
+</Outputs>
+</Interlink>
+</Interlinks>
+<Transforms> </Transforms>
+<Outputs>
+<Dataset id="sameAs_pessoa_fisica" type="file">
+<Param name="file" value="output_ceis_pessoa_fisica.ttl"/>
+<Param name="format" value="N-Triples"/>
+<Param name="graph" value=""/>
+</Dataset>
+</Outputs>
+</Silk>
