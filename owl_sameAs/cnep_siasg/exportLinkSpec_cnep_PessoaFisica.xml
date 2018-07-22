@@ -6,8 +6,8 @@
 <Prefix id="ardo" namespace="http://www.arida.com/ontology/"/>
 </Prefixes>
 <DataSources>
-<Dataset id="ceis" type="file">
-<Param name="file" value="ceis_output.ttl"/>
+<Dataset id="cnep" type="file">
+<Param name="file" value="cnep_output.ttl"/>
 <Param name="format" value="N-Triples"/>
 <Param name="graph" value=""/>
 </Dataset>
@@ -18,8 +18,8 @@
 </Dataset>
 </DataSources>
 <Interlinks>
-<Interlink id="sameAs_pessoa_fisica_ceis">
-<SourceDataset dataSource="ceis" var="a" typeUri="http://www.arida.com/ontology/PessoaFisica">
+<Interlink id="sameAs_pessoa_fisica_cnep">
+<SourceDataset dataSource="cnep" var="a" typeUri="http://www.arida.com/ontology/PessoaFisica">
 <RestrictTo> </RestrictTo>
 </SourceDataset>
 <TargetDataset dataSource="siasg_pessoa_fisica" var="b" typeUri="http://www.arida.com/ontology/PessoaFisica">
@@ -54,7 +54,7 @@
 <Transforms> </Transforms>
 <Outputs>
 <Dataset id="sameAs_pessoa_fisica" type="file">
-<Param name="file" value="output_ceis_pessoa_fisica.ttl"/>
+<Param name="file" value="output_cnep_pessoa_fisica.ttl"/>
 <Param name="format" value="N-Triples"/>
 <Param name="graph" value=""/>
 </Dataset>
