@@ -12,7 +12,7 @@
 	];
 	rr:subjectMap [
 		rr:class ardo:PessoaJuridica, ardo:SancionadoPJ, ardo:Sancionado ;
-		rr:template "http://www.arida.com/ceis/resource/Pessoa/{PJ_ID}"
+		rr:template "http://www.arida.com/ceis/resources/Pessoa/{PJ_ID}"
 	];
 	rr:predicateObjectMap 
 	[
@@ -44,7 +44,7 @@
 	];
 	rr:subjectMap [
 		rr:class ardo:PessoaFisica, ardo:SancionadoPF, ardo:Sancionado;
-		rr:template "http://www.arida.com/ceis/resource/Pessoa/{PF_ID}"
+		rr:template "http://www.arida.com/ceis/resources/Pessoa/{PF_ID}"
 	];
 	rr:predicateObjectMap [
 		rr:predicate ardo:cpf;
@@ -65,7 +65,7 @@
 	];
 	rr:subjectMap [
 		rr:class ardo:SancaoAplicada;
-		rr:template "http://www.arida.com/ceis/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+		rr:template "http://www.arida.com/ceis/resources/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
 		rr:predicate ardo:data_inicio;
@@ -96,7 +96,7 @@
 	];
 	rr:subjectMap [
 		rr:class ardo:Processo;
-		rr:template "http://www.arida.com/ceis/resource/Processo/{numero_processo}"
+		rr:template "http://www.arida.com/ceis/resources/Processo/{numero_processo}"
 	];
 	rr:predicateObjectMap [
 		rr:predicate ardo:numero_processo;
@@ -117,7 +117,7 @@
 	];
 	rr:subjectMap [
 		rr:class ardo:Publicacao;
-		rr:template "http://www.arida.com/ceis/resource/Publicacao/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+		rr:template "http://www.arida.com/ceis/resources/Publicacao/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
 		rr:predicate ardo:data_publicacao;
@@ -138,7 +138,7 @@
 	];
 	rr:subjectMap [
 		rr:class ardo:OrgaoSancionador;
-		rr:template "http://www.arida.com/ceis/resource/OrgaoSancionador/{orgao_sancionador}"
+		rr:template "http://www.arida.com/ceis/resources/OrgaoSancionador/{orgao_sancionador}"
 	];
 	rr:predicateObjectMap [
 		rr:predicate ardo:nome_orgao;
@@ -170,7 +170,7 @@
 	];
 	rr:subjectMap [
 		rr:class ardo:OrigemInfo;
-		rr:template "http://www.arida.com/ceis/resource/OrigemInfo/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+		rr:template "http://www.arida.com/ceis/resources/OrigemInfo/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
 		rr:predicate ardo:nome;
@@ -196,12 +196,12 @@
 		];
 	rr:subjectMap
 		[
-			rr:template "http://www.arida.com/ceis/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+			rr:template "http://www.arida.com/ceis/resources/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 		];
 	rr:predicateObjectMap
 		[
 			rr:predicate ardo:geradaPelo;
-			rr:objectMap [ rr:template "http://www.arida.com/ceis/resource/Processo/{numero_processo}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/ceis/resources/Processo/{numero_processo}" ]
 		]
 	.
 
@@ -214,12 +214,12 @@
 		];
 	rr:subjectMap
 		[
-			rr:template "http://www.arida.com/ceis/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+			rr:template "http://www.arida.com/ceis/resources/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 		];
 	rr:predicateObjectMap
 		[
 			rr:predicate ardo:aplicadaSobre;
-			rr:objectMap [ rr:template "http://www.arida.com/ceis/resource/Pessoa/{cpf_ou_cnpj}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/ceis/resources/Pessoa/{cpf_ou_cnpj}" ]
 		]
 	.
 
@@ -233,12 +233,12 @@
 		];
 	rr:subjectMap
 		[
-			rr:template "http://www.arida.com/ceis/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+			rr:template "http://www.arida.com/ceis/resources/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 		];
 	rr:predicateObjectMap
 		[
 			rr:predicate ardo:informacoesPublicacao;
-			rr:objectMap [ rr:template "http://www.arida.com/ceis/resource/Publicacao/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/ceis/resources/Publicacao/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
 		]
 	.
 
@@ -251,12 +251,12 @@
 		];
 	rr:subjectMap
 		[
-			rr:template "http://www.arida.com/ceis/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
+			rr:template "http://www.arida.com/ceis/resources/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 		];
 	rr:predicateObjectMap
 		[
 			rr:predicate ardo:informacoesOrigem;
-			rr:objectMap [ rr:template "http://www.arida.com/ceis/resource/OrigemInfo/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/ceis/resources/OrigemInfo/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
 		]
 	.
 
@@ -269,12 +269,12 @@
 		];
 	rr:subjectMap
 		[
-			rr:template "http://www.arida.com/ceis/resource/OrgaoSancionador/{orgao_sancionador}"
+			rr:template "http://www.arida.com/ceis/resources/OrgaoSancionador/{orgao_sancionador}"
 		];
 	rr:predicateObjectMap
 		[
 			rr:predicate ardo:sanciona;
-			rr:objectMap [ rr:template "http://www.arida.com/ceis/resource/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/ceis/resources/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}" ]
 		]
 	.
 
@@ -288,7 +288,7 @@
 		];
 	rr:subjectMap
 		[
-			rr:template "http://www.arida.com/ceis/resource/OrgaoSancionador/{orgao_sancionador}"
+			rr:template "http://www.arida.com/ceis/resources/OrgaoSancionador/{orgao_sancionador}"
 		];
 	rr:predicateObjectMap
 		[
