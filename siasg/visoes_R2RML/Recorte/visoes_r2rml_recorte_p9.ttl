@@ -86,7 +86,7 @@
 	rr:logicalTable
 		[
 			rr:sqlQuery """
-				SELECT * 
+				SELECT replace(replace(nu_cpf_vencedor, '-', ''), '.', '') as cpf_anonimizado, * 
 				FROM compras_sem_licitacao_do_ceara_item
 				where co_servico is not null and nu_cpf_vencedor is not null
 			"""
@@ -106,7 +106,7 @@
 
 		[
 			rr:predicate ardo:temVencedor;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{nu_cpf_vencedor}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{cpf_anonimizado}" ]
 		] .
 
 
@@ -219,7 +219,7 @@
 	rr:logicalTable
 		[
 			rr:sqlQuery """
-				SELECT * 
+				SELECT replace(replace(nu_cpf_vencedor, '-', ''), '.', '') as cpf_anonimizado, * 
 				FROM compras_sem_licitacao_do_ceara_item
 				where co_conjunto_materiais is not null and nu_cpf_vencedor is not null
 			"""
@@ -239,7 +239,7 @@
 
 		[
 			rr:predicate ardo:temVencedor;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{nu_cpf_vencedor}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{cpf_anonimizado}" ]
 		] .
 
 

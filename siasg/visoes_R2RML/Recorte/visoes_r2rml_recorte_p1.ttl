@@ -247,7 +247,7 @@
 
 		[
 			rr:predicate ardo:temContratado;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/Pessoa_Anonimizada/{cpf_anonimizado}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{cpf_anonimizado}" ]
 		] .
 
 

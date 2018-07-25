@@ -16,22 +16,22 @@
 	
 	rr:subjectMap
 		[
-			rr:class ardo:Pessoa_Anonimizada;
-			rr:template "http://www.arida.com/siasg/resources/Pessoa_Anonimizada/{cpf_anonimizado}"
+			rr:class ardo:PessoaAnonimizada;
+			rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{cpf_anonimizado}"
 		];
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:cpf_anonimizado;
-			rr:objectMap [ rr:column '"cpfcontratada"' ]
+			rr:objectMap [ rr:column '"cpf_anonimizado"' ]
 		] .
 
 <PessoaAnonimizada_Compras> a rr:TripleMap;
 	rr:logicalTable
 		[
 			rr:sqlQuery """
-				SELECT * 
+				SELECT distinct replace(replace(nu_cpf_vencedor, '-', ''), '.', '') as cpf_anonimizado
 				FROM compras_sem_licitacao_do_ceara_item
 				where nu_cpf_vencedor is not null
 			"""
@@ -39,13 +39,34 @@
 	
 	rr:subjectMap
 		[
-			rr:class ardo:Pessoa_Anonimizada;
-			rr:template "http://www.arida.com/siasg/resources/Pessoa_Anonimizada/{nu_cpf_vencedor}"
+			rr:class ardo:PessoaAnonimizada;
+			rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{cpf_anonimizado}"
 		];
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:cpf_anonimizado;
-			rr:objectMap [ rr:column '"nu_cpf_vencedor"' ]
+			rr:objectMap [ rr:column '"cpf_anonimizado"' ]
+		] .
+
+<PessoaAnonimizada> a rr:TripleMap;
+	rr:logicalTable
+		[
+			rr:sqlQuery """
+				SELECT distinct cpf 
+				FROM fornecedores
+				WHERE cpf is not null
+			"""
+		];
+	rr:subjectMap
+		[
+			rr:class ardo:PessoaAnonimizada;
+			rr:template "http://www.arida.com/siasg/resources/PessoaAnonimizada/{cpf}"
+		];
+	rr:predicateObjectMap 
+
+		[
+			rr:predicate ardo:cpf_anonimizado;
+			rr:objectMap [ rr:column '"cpf"' ]
 		] .
