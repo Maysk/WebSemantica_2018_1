@@ -64,7 +64,7 @@
 		"""
 	];
 	rr:subjectMap [
-		rr:class ardo:SancaoAplicada;
+		rr:class ardo:SancaoAplicada, ardo:SancaoCNEP;
 		rr:template "http://www.arida.com/cnep/resources/SancaoAplicada/{numero_processo}/{cpf_ou_cnpj}/{tipo_sancao}"
 	];
 	rr:predicateObjectMap [
@@ -86,6 +86,10 @@
 	rr:predicateObjectMap [
 		rr:predicate ardo:valor_multa;
 		rr:objectMap [ rr:column '"valor_multa"']
+	];
+	rr:predicateObjectMap [
+		rr:predicate ardo:tipo_sancao;
+		rr:objectMap [ rr:column '"tipo_sancao"']
 	] .
 
 <Processo> a rr:TripleMap;

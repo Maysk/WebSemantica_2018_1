@@ -1,0 +1,271 @@
+#Query 01
+
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+select ?nome_uasg ?qtd_de_contratos ?qtd_de_contratos_duvidosos ?quo
+WHERE {
+  
+   ?uasg a ardo:UASG; 
+		ardo:nome ?nome_uasg .
+   
+   {
+	SELECT ?uasg count(*) as ?qtd_de_contratos
+	WHERE {
+		?contrato a ardo:Contrato;
+			ardo:temContratante ?uasg;
+			ardo:temContratado ?fornecedor.
+		?fornecedor a ardo:PessoaJuridica .
+	}   
+   }
+
+    {
+	SELECT ?uasg count(*) as ?qtd_de_contratos_duvidosos
+	WHERE {
+		?contrato_d a ardo:Contrato;
+			ardo:temContratante ?uasg;
+			ardo:temContratado ?fornecedor_s.
+		?fornecedor_s a ardo:PessoaJuridica, ardo:Sancionado .
+
+	}   
+   }
+
+   BIND(?qtd_de_contratos_duvidosos / xsd:double(?qtd_de_contratos) AS ?quo)
+  }
+
+ORDER BY desc(?quo)
+limit 10
+
+#Query 02
+
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+select ?nome_uasg ?qtd_compras_sem_licitacao ?qtd_compras_sem_licitacao_duvidosas ?quo
+WHERE {
+  
+   ?uasg a ardo:UASG; 
+		ardo:nome ?nome_uasg .
+   
+   {
+	SELECT ?uasg count(*) as ?qtd_compras_sem_licitacao
+	WHERE {
+		?compraSemLicitacao a ardo:ComprasSemLicitacao;
+			ardo:unidadeResponsavel ?uasg.
+                ?compraSemLicitacao ardo:temItem ?item .
+                ?item ardo:temVencedor ?fornecedor .
+                ?fornecedor a ardo:PessoaJuridica .
+	}   
+   }
+
+   {
+	SELECT ?uasg count(*) as ?qtd_compras_sem_licitacao_duvidosas
+	WHERE {
+		?compraSemLicitacao_d a ardo:ComprasSemLicitacao;
+			ardo:unidadeResponsavel ?uasg.
+                ?compraSemLicitacao_d ardo:temItem ?item_d .
+                ?item_d ardo:temVencedor ?fornecedor_d .
+                ?fornecedor_d a ardo:PessoaJuridica, ardo:Sancionado .
+	}   
+   }
+
+  BIND(?qtd_compras_sem_licitacao_duvidosas / xsd:double(?qtd_compras_sem_licitacao) AS ?quo)
+
+  }
+
+ORDER BY desc(?quo)
+limit 10
+
+#Query 03
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+select ?nome_uasg ?qtd_de_fornecedor ?qtd_de_fornecedor_s ?quo
+WHERE {
+  
+   ?uasg a ardo:UASG; 
+		ardo:nome ?nome_uasg .
+   
+   {
+	SELECT ?uasg count(DISTINCT ?fornecedor) as ?qtd_de_fornecedor
+	WHERE {
+		?contrato a ardo:Contrato;
+			ardo:temContratante ?uasg;
+			ardo:temContratado ?fornecedor.
+		?fornecedor a ardo:PessoaJuridica .
+	}   
+   }
+
+    {
+	SELECT ?uasg count(DISTINCT ?fornecedor_s) as ?qtd_de_fornecedor_s
+	WHERE {
+		?contrato_d a ardo:Contrato;
+			ardo:temContratante ?uasg;
+			ardo:temContratado ?fornecedor_s.
+		?fornecedor_s a ardo:PessoaJuridica, ardo:Sancionado .
+
+	}   
+   }
+
+   BIND(?qtd_de_fornecedor_s / xsd:double(?qtd_de_fornecedor) AS ?quo)
+  }
+
+ORDER BY desc(?quo)
+limit 10
+
+
+#Query 04
+
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+select ?nome_uasg ?qtd_fornecedores ?qtd_fornecedores_d ?quo
+WHERE {
+  
+   ?uasg a ardo:UASG; 
+		ardo:nome ?nome_uasg .
+   
+   {
+	SELECT ?uasg count(distinct ?fornecedor) as ?qtd_fornecedores
+	WHERE {
+		?compraSemLicitacao a ardo:ComprasSemLicitacao;
+			ardo:unidadeResponsavel ?uasg.
+                ?compraSemLicitacao ardo:temItem ?item .
+                ?item ardo:temVencedor ?fornecedor .
+                ?fornecedor a ardo:PessoaJuridica .
+	}   
+   }
+
+   {
+	SELECT ?uasg count(distinct ?fornecedor_d) as ?qtd_fornecedores_d
+	WHERE {
+		?compraSemLicitacao_d a ardo:ComprasSemLicitacao;
+			ardo:unidadeResponsavel ?uasg.
+                ?compraSemLicitacao_d ardo:temItem ?item_d .
+                ?item_d ardo:temVencedor ?fornecedor_d .
+                ?fornecedor_d a ardo:PessoaJuridica, ardo:Sancionado .
+	}   
+   }
+
+  BIND(?qtd_fornecedores_d / xsd:double(?qtd_fornecedores) AS ?quo)
+
+  }
+
+ORDER BY desc(?quo)
+limit 10
+
+# Query 05
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+SELECT ?descricao ?media_valor_estimado ?max_valor_estimado ?min_valor_estimado ?unidades_utilizadas
+WHERE {
+     
+    ?servico a ardo:Servico ;
+      ardo:codigo ?codigo ;
+        ardo:descricao ?descricao .
+     
+    {
+      SELECT ?servico AVG(?valor_por_servico) as ?media_valor_estimado max(?valor_por_servico) as ?max_valor_estimado min(?valor_por_servico) as ?min_valor_estimado  GROUP_CONCAT(distinct ?un ; separator=", ") as ?unidades_utilizadas
+      WHERE {
+        ?compras a ardo:ComprasSemLicitacao ;
+          ardo:temItem ?item .
+        
+        ?item ardo:instanciaDe ?servico ;
+          ardo:valor_estimado ?valor_estimado;
+          ardo:quantidade ?quantidade; 
+          ardo:temVencedor ?fornecedor;
+          ardo:unidade_medida ?un     .
+                
+      ?fornecedor a ardo:PessoaJuridica .
+      FILTER NOT EXISTS{
+        ?fornecedor a ardo:Sancionado .
+      }
+     
+
+      BIND(?valor_estimado/ xsd:double(?quantidade ) AS ?valor_por_servico)
+
+      }
+    }
+}
+limit 20
+
+# Query 06
+
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+SELECT ?descricao ROUND(?media_valor_estimado) ROUND(?media_valor_estimado_d)
+WHERE {
+     
+    ?servico a ardo:Material ;
+      ardo:codigo ?codigo ;
+        ardo:descricao ?descricao .
+     
+    {
+      SELECT ?servico AVG(?valor_por_servico) as ?media_valor_estimado 
+      WHERE {
+        ?compras a ardo:ComprasSemLicitacao ;
+          ardo:temItem ?item .
+        
+        ?item ardo:instanciaDe ?servico ;
+          ardo:valor_estimado ?valor_estimado;
+          ardo:quantidade ?quantidade; 
+                ardo:temVencedor ?fornecedor.
+                
+      ?fornecedor a ardo:PessoaJuridica .
+
+      BIND(?valor_estimado/ xsd:double(?quantidade ) AS ?valor_por_servico)
+
+      }
+    }
+
+    {
+      SELECT ?servico AVG(?valor_por_servico) as ?media_valor_estimado_d
+      WHERE {
+        ?compras a ardo:ComprasSemLicitacao ;
+          ardo:temItem ?item .
+        
+        ?item ardo:instanciaDe ?servico ;
+          ardo:valor_estimado ?valor_estimado;
+          ardo:quantidade ?quantidade; 
+                ardo:temVencedor ?fornecedor.
+                
+      ?fornecedor a ardo:PessoaJuridica, ardo:Sancionado .
+
+      BIND(?valor_estimado/ xsd:double(?quantidade ) AS ?valor_por_servico)
+
+      }
+    }
+}
+
+ORDER BY desc(?media_valor_estimado_d)
+LIMIT 20
+
+
+# Questao 07
+
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+SELECT ?cnpj ?informado ?razao_social
+WHERE{
+    ?fornecedor a ardo:PessoaJuridica, ardo:Sancionado ; 
+        ardo:cnpj ?cnpj ;
+        ardo:nome_informado ?informado ; 
+        ardo:nome_fornecedor ?nome_siasg ; 
+        ardo:razao_social ?razao_social .
+
+
+}
+limit 30
+
+
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+SELECT ?fornecedor ?data_inicial
+WHERE{
+    ?fornecedor a ardo:PessoaJuridica, ardo:Sancionado .
+    
+    ?sancao a ardo:SancaoAplicada; 
+       ardo:aplicadaSobre ?fornecedor;
+       ardo:data_inicio ?data_inicial.
+    ?
+
+}
+limit 30
+
+
