@@ -1,0 +1,144 @@
+Contrato 
+	http://www.arida.com/siasg/resources/Contrato/
+
+Licitacao
+	http://www.arida.com/siasg/resources/Licitacao/ 
+
+UASG
+	http://www.arida.com/siasg/resources/UASG/
+
+PessoaJuridica
+	http://www.arida.com/siasg/resources/Pessoa/
+
+FornecedorPessoaFisica
+	http://www.arida.com/siasg/resources/FornecedorPF/
+
+PessoaAnonimizada
+	http://www.arida.com/siasg/resources/PessoaAnonimizada/
+
+Municipio
+	http://www.arida.com/siasg/resources/Municipio/
+
+UASG*
+	http://www.arida.com/siasg/resources/UASG/
+
+RamoDeNegocio*
+	http://www.arida.com/siasg/resources/RamoDeNegocio/
+
+NaturezaJuridica*
+	http://www.arida.com/siasg/resources/NaturezaJuridica/
+
+PorteDaEmpresa*
+	http://www.arida.com/siasg/resources/PorteDaEmpresa/
+
+CNAE*
+	http://www.arida.com/siasg/resources/CNAE/
+
+Orgao
+  http://www.arida.com/siasg/resources/Orgao/
+
+UnidadeFederativa
+  http://www.arida.com/siasg/resources/UnidadeFederativa/
+
+Servico
+  http://www.arida.com/siasg/resources/Servico/
+
+SecaoServico
+  http://www.arida.com/siasg/resources/SecaoServico/
+
+DivisaoServico
+  http://www.arida.com/siasg/resources/DivisaoServico/
+
+GrupoServico
+  http://www.arida.com/siasg/resources/GrupoServico/
+
+ClasseServico
+  http://www.arida.com/siasg/resources/ClasseServico/
+
+SubclasseServico
+  http://www.arida.com/siasg/resources/SubclasseServico/
+
+Material
+  http://www.arida.com/siasg/resources/Material/
+
+GrupoMaterial
+  http://www.arida.com/siasg/resources/GrupoMaterial/
+
+ClasseMaterial
+  http://www.arida.com/siasg/resources/ClasseMaterial/
+
+PDM
+  http://www.arida.com/siasg/resources/PDM/
+
+ItemLicitacao
+  http://www.arida.com/siasg/resources/ItemLicitacao/
+
+ComprasSemLicitacao
+  http://www.arida.com/siasg/resources/ComprasSemLicitacao/
+
+ItemCompra
+  http://www.arida.com/siasg/resources/ItemCompra/
+
+
+
+
+
+http://ld-r.org/docs/configReactors.html
+
+ prefix ardo: <http://www.arida.com/ontology/>
+SELECT ?fornecedor ?a ?b ?c ?d ?e ?f
+WHERE {
+   ?fornecedor a ardo:Fornecedor .
+   OPTIONAL {
+       ?fornecedor ardo:cadastradoPor ?a .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:temRamoDeNegocio ?b .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:cnaePrimario ?c .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:cnaeSecundario ?d .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:temPorte ?e .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:temNaturezaJuridica ?f .
+   }
+
+}
+
+DELETE {
+	?fornecedor ardo:cadastradoPor ?a .
+	?fornecedor ardo:temRamoDeNegocio ?b .
+	?fornecedor ardo:cnaePrimario ?c .
+	?fornecedor ardo:cnaeSecundario ?d .
+	?fornecedor ardo:temPorte ?e .
+	?fornecedor ardo:temNaturezaJuridica ?f .
+}
+WHERE {
+   ?fornecedor a ardo:Fornecedor .
+   OPTIONAL {
+       ?fornecedor ardo:cadastradoPor ?a .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:temRamoDeNegocio ?b .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:cnaePrimario ?c .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:cnaeSecundario ?d .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:temPorte ?e .
+   }
+   OPTIONAL {
+       ?fornecedor ardo:temNaturezaJuridica ?f .
+   }
+
+}
+
+LIMIT 100

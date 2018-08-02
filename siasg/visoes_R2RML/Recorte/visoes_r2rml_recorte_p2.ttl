@@ -47,41 +47,41 @@
 
 		[
 			rr:predicate ardo:cadastradoPor;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/UASG/{id_unidade_cadastradora}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UASG/{id_unidade_cadastradora}" ]
 		];
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:temRamoDeNegocio;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/RamoDeNegocio/{id_ramo_negocio}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/RamoDeNegocio/{id_ramo_negocio}" ]
 		];  
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:temNaturezaJuridica;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/NaturezaJuridica/{id_natureza_juridica}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/NaturezaJuridica/{id_natureza_juridica}" ]
 		]; 
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:temPorte;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/PorteDaEmpresa/{id_porte_empresa}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/PorteDaEmpresa/{id_porte_empresa}" ]
 		]; 
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:cnaePrimario;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/CNAE/{id_cnae}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/CNAE/{id_cnae}" ]
 		]; 
 
 	rr:predicateObjectMap 
 
 		[
 			rr:predicate ardo:cnaeSecundario;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/CNAE/{id_cnae2}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/CNAE/{id_cnae2}" ]
 		]; 
 	.
 

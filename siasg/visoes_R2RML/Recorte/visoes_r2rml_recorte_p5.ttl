@@ -57,7 +57,7 @@
 
 		[
 			rr:predicate ardo:cadastradoPor;
-			rr:objectMap [ rr:template "http://www.arida.com/siasg/UASG/{id_unidade_cadastradora}" ]
+			rr:objectMap [ rr:template "http://www.arida.com/siasg/resources/UASG/{id_unidade_cadastradora}" ]
 		];  
 	. 
 
