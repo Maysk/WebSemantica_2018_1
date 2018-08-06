@@ -2,7 +2,7 @@
 #Contratos feitos com sancionados
 PREFIX ardo: <http://www.arida.com/ontology/>
 
-select ?nome_uasg  ?contrato ?dt_inicio_vigencia ?sancao ?inicio_sancao ?final_sancao ?fornecedor ?nome_fornecedor
+SELECT ?nome_uasg  ?contrato ?dt_inicio_vigencia ?sancao ?inicio_sancao ?final_sancao ?fornecedor ?nome_fornecedor
 WHERE { 
     ?contrato a ardo:Contrato ; 
       ardo:data_inicio_vigencia ?dt_inicio_vigencia ; 
@@ -13,14 +13,35 @@ WHERE {
 
     ?sancao a ardo:SancaoAplicada ; ardo:data_inicio ?inicio_sancao ; ardo:data_final ?final_sancao ; ardo:aplicadaSobre ?fornecedor. 
 
-    ?fornecedor ardo:nome_fornecedor ?nome_fornecedor .
+    ?fornecedor a ardo:PessoaJuridica ; ardo:nome_fornecedor ?nome_fornecedor .
 
-   filter(?dt_inicio_vigencia > ?inicio_sancao)
+   FILTER (?dt_inicio_vigencia > ?inicio_sancao)
    
   }
 
 
+#Compras feitas com sancionados
+SELECT ?nome_uasg  ?compra ?dt_ratificacao ?dt_ratificacao_date ?sancao ?inicio_sancao ?final_sancao ?fornecedor ?nome_fornecedor
+WHERE { 
+    ?compra a ardo:ComprasSemLicitacao ; 
+      ardo:data_ratificacao ?dt_ratificacao ; 
+      ardo:unidadeResponsavel ?uasg .
+   
+    ?compra ardo:temItem ?item .
 
+    ?item ardo:temVencedor ?fornecedor .
+
+    ?uasg ardo:nome ?nome_uasg .
+
+    ?sancao a ardo:SancaoAplicada ; ardo:data_inicio ?inicio_sancao ; ardo:data_final ?final_sancao ; ardo:aplicadaSobre ?fornecedor. 
+
+    ?fornecedor a ardo:PessoaJuridica ; ardo:nome_fornecedor ?nome_fornecedor .
+
+    bind(xsd:date(xsd:dateTime(?dt_ratificacao)) as ?dt_ratificacao_date)    
+ 
+    FILTER (?dt_ratificacao_date > ?inicio_sancao)
+   
+  }
 
 #Query 01
 
@@ -105,27 +126,27 @@ select ?nome_uasg ?qtd_de_fornecedor ?qtd_de_fornecedor_s ?quo
 WHERE {
   
    ?uasg a ardo:UASG; 
-		ardo:nome ?nome_uasg .
+    ardo:nome ?nome_uasg .
    
    {
-	SELECT ?uasg count(DISTINCT ?fornecedor) as ?qtd_de_fornecedor
-	WHERE {
-		?contrato a ardo:Contrato;
-			ardo:temContratante ?uasg;
-			ardo:temContratado ?fornecedor.
-		?fornecedor a ardo:PessoaJuridica .
-	}   
+  SELECT ?uasg count(DISTINCT ?fornecedor) as ?qtd_de_fornecedor
+  WHERE {
+    ?contrato a ardo:Contrato;
+      ardo:temContratante ?uasg;
+      ardo:temContratado ?fornecedor.
+    ?fornecedor a ardo:PessoaJuridica .
+  }   
    }
 
     {
-	SELECT ?uasg count(DISTINCT ?fornecedor_s) as ?qtd_de_fornecedor_s
-	WHERE {
-		?contrato_d a ardo:Contrato;
-			ardo:temContratante ?uasg;
-			ardo:temContratado ?fornecedor_s.
-		?fornecedor_s a ardo:PessoaJuridica, ardo:Sancionado .
+  SELECT ?uasg count(DISTINCT ?fornecedor_s) as ?qtd_de_fornecedor_s
+  WHERE {
+    ?contrato_d a ardo:Contrato;
+      ardo:temContratante ?uasg;
+      ardo:temContratado ?fornecedor_s.
+    ?fornecedor_s a ardo:PessoaJuridica, ardo:Sancionado .
 
-	}   
+  }   
    }
 
    BIND(?qtd_de_fornecedor_s / xsd:double(?qtd_de_fornecedor) AS ?quo)
@@ -133,6 +154,7 @@ WHERE {
 
 ORDER BY desc(?quo)
 limit 10
+
 
 
 #Query 04
@@ -300,6 +322,20 @@ limit 30
 # Ver quantidade de contratos duvidos por cidade e / ou por ano  ; usar valores relativos. (Histograma)
 
 # Ramo de negocio com mais treta
+SELECT ?nome_ramo count(distinct ?fornecedor) as ?numero_de_fornecedores
+WHERE { 
+
+    ?sancao a ardo:SancaoAplicada ; ardo:data_inicio ?inicio_sancao ; ardo:data_final ?final_sancao ; ardo:aplicadaSobre ?fornecedor. 
+
+    ?fornecedor a ardo:PessoaJuridica ; ardo:nome_fornecedor ?nome_fornecedor ; ardo:temRamoDeNegocio ?ramo .
+    ?ramo ardo:descricao ?nome_ramo .
+   
+  }  
+group by ?nome_ramo
+order by desc(?numero_de_fornecedores)
+limit 15
+
+# Quatintidade de fornecedores combinado com a quantidade de UASGS que o fornecedor se relaciona 
 
 # Quantidade de item mais tretoso pra ver se está, necessariamente, associado ao ramo de negocio.
 
