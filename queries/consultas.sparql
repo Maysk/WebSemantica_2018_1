@@ -1,3 +1,27 @@
+#Query 00
+#Contratos feitos com sancionados
+PREFIX ardo: <http://www.arida.com/ontology/>
+
+select ?nome_uasg  ?contrato ?dt_inicio_vigencia ?sancao ?inicio_sancao ?final_sancao ?fornecedor ?nome_fornecedor
+WHERE { 
+    ?contrato a ardo:Contrato ; 
+      ardo:data_inicio_vigencia ?dt_inicio_vigencia ; 
+      ardo:temContratado ?fornecedor ;
+      ardo:temContratante ?uasg .
+
+    ?uasg ardo:nome ?nome_uasg .
+
+    ?sancao a ardo:SancaoAplicada ; ardo:data_inicio ?inicio_sancao ; ardo:data_final ?final_sancao ; ardo:aplicadaSobre ?fornecedor. 
+
+    ?fornecedor ardo:nome_fornecedor ?nome_fornecedor .
+
+   filter(?dt_inicio_vigencia > ?inicio_sancao)
+   
+  }
+
+
+
+
 #Query 01
 
 PREFIX ardo: <http://www.arida.com/ontology/>
@@ -267,6 +291,7 @@ WHERE{
 
 }
 limit 30
+
 
 
 
