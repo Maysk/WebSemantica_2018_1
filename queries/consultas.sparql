@@ -1,26 +1,49 @@
 #Query 00
 #Contratos feitos com sancionados
+
 PREFIX ardo: <http://www.arida.com/ontology/>
 
-SELECT ?nome_uasg  ?contrato ?dt_inicio_vigencia ?sancao ?inicio_sancao ?final_sancao ?fornecedor ?nome_fornecedor
+SELECT  ?nome_uasg ?id_contrato ?inicio_sancao ?dt_inicio_vigencia 
+        ?final_sancao ?nome_fornecedor ?abrangencia ?nome_orgao_sancionador 
+        ?sigla_uf ?tipo_sancao
 WHERE { 
     ?contrato a ardo:Contrato ; 
+      ardo:contrato_id ?id_contrato ;
       ardo:data_inicio_vigencia ?dt_inicio_vigencia ; 
       ardo:temContratado ?fornecedor ;
       ardo:temContratante ?uasg .
 
+    ?fornecedor a ardo:PessoaJuridica ; ardo:nome_fornecedor ?nome_fornecedor .
+
     ?uasg ardo:nome ?nome_uasg .
 
-    ?sancao a ardo:SancaoAplicada ; ardo:data_inicio ?inicio_sancao ; ardo:data_final ?final_sancao ; ardo:aplicadaSobre ?fornecedor. 
+    ?sancao a ardo:SancaoAplicada ; 
+      ardo:data_inicio ?inicio_sancao ; 
+      ardo:data_final ?final_sancao ; 
+      ardo:aplicadaSobre ?fornecedor ; 
+      ardo:tipo_sancao ?tipo_sancao
 
-    ?fornecedor a ardo:PessoaJuridica ; ardo:nome_fornecedor ?nome_fornecedor .
+    OPTIONAL {
+      ?sancao a ardo:SancaoCNEP ; ardo:valor_multa ?valor_multa .
+    }
+
+    OPTIONAL {
+      ?sancao a ardo:SancaoCEIS ; ardo:abrangencia ?abrangencia. 
+      ?orgaoSancionador ardo:sanciona ?sancao ; 
+          ardo:nome_orgao ?nome_orgao_sancionador ; 
+          ardo:temUF ?uf .
+      ?uf ardo:sigla_uf ?sigla_uf .
+
+    }
 
    FILTER (?dt_inicio_vigencia > ?inicio_sancao)
    
   }
 
 
-#Compras feitas com sancionados
+
+
+#Compras onde o fornecedor está sancionado sancionados
 SELECT ?nome_uasg  ?compra ?dt_ratificacao ?dt_ratificacao_date ?sancao ?inicio_sancao ?final_sancao ?fornecedor ?nome_fornecedor
 WHERE { 
     ?compra a ardo:ComprasSemLicitacao ; 
@@ -122,35 +145,35 @@ limit 10
 #Query 03
 PREFIX ardo: <http://www.arida.com/ontology/>
 
-select ?nome_uasg ?qtd_de_fornecedor ?qtd_de_fornecedor_s ?quo
+SELECT ?nome_uasg ?qtd_de_fornecedor ?qtd_de_fornecedor_s ?quo
 WHERE {
   
-   ?uasg a ardo:UASG; 
-    ardo:nome ?nome_uasg .
+   ?uasg a ardo:UASG; ardo:nome ?nome_uasg .
    
-   {
-  SELECT ?uasg count(DISTINCT ?fornecedor) as ?qtd_de_fornecedor
-  WHERE {
-    ?contrato a ardo:Contrato;
-      ardo:temContratante ?uasg;
-      ardo:temContratado ?fornecedor.
-    ?fornecedor a ardo:PessoaJuridica .
-  }   
-   }
-
-    {
-  SELECT ?uasg count(DISTINCT ?fornecedor_s) as ?qtd_de_fornecedor_s
-  WHERE {
-    ?contrato_d a ardo:Contrato;
-      ardo:temContratante ?uasg;
-      ardo:temContratado ?fornecedor_s.
-    ?fornecedor_s a ardo:PessoaJuridica, ardo:Sancionado .
-
-  }   
-   }
-
-   BIND(?qtd_de_fornecedor_s / xsd:double(?qtd_de_fornecedor) AS ?quo)
+  {
+    SELECT ?uasg count(DISTINCT ?fornecedor) as ?qtd_de_fornecedor
+    WHERE {
+      ?contrato a ardo:Contrato;
+        ardo:temContratante ?uasg;
+        ardo:temContratado ?fornecedor.
+      ?fornecedor a ardo:PessoaJuridica .
+    }   
   }
+
+  {
+    SELECT ?uasg count(DISTINCT ?fornecedor_s) as ?qtd_de_fornecedor_s
+    WHERE {
+      ?contrato_d a ardo:Contrato;
+        ardo:temContratante ?uasg;
+        ardo:temContratado ?fornecedor_s.
+      ?fornecedor_s a ardo:PessoaJuridica, ardo:Sancionado .
+
+    }  
+  }
+
+  BIND(?qtd_de_fornecedor_s / xsd:double(?qtd_de_fornecedor) AS ?quo)
+
+}
 
 ORDER BY desc(?quo)
 limit 10
@@ -309,7 +332,6 @@ WHERE{
     ?sancao a ardo:SancaoAplicada; 
        ardo:aplicadaSobre ?fornecedor;
        ardo:data_inicio ?data_inicial.
-    ?
 
 }
 limit 30
@@ -325,15 +347,35 @@ limit 30
 SELECT ?nome_ramo count(distinct ?fornecedor) as ?numero_de_fornecedores
 WHERE { 
 
-    ?sancao a ardo:SancaoAplicada ; ardo:data_inicio ?inicio_sancao ; ardo:data_final ?final_sancao ; ardo:aplicadaSobre ?fornecedor. 
+    ?sancao a ardo:SancaoAplicada ; 
+      ardo:data_inicio ?inicio_sancao ; 
+      ardo:data_final ?final_sancao ; 
+      ardo:aplicadaSobre ?fornecedor. 
 
-    ?fornecedor a ardo:PessoaJuridica ; ardo:nome_fornecedor ?nome_fornecedor ; ardo:temRamoDeNegocio ?ramo .
+    ?fornecedor a ardo:PessoaJuridica ; 
+      ardo:nome_fornecedor ?nome_fornecedor ; 
+      ardo:temRamoDeNegocio ?ramo .
+    
     ?ramo ardo:descricao ?nome_ramo .
    
   }  
 group by ?nome_ramo
 order by desc(?numero_de_fornecedores)
 limit 15
+
+#Agregação dos fornecedores por Porte
+SELECT ?porte_nome count(distinct ?fornecedor) as ?numero_de_fornecedores
+WHERE { 
+
+    ?sancao a ardo:SancaoAplicada ; ardo:data_inicio ?inicio_sancao ; ardo:data_final ?final_sancao ; ardo:aplicadaSobre ?fornecedor. 
+
+    ?fornecedor a ardo:PessoaJuridica ; ardo:nome_fornecedor ?nome_fornecedor ; ardo:temPorte ?porte .
+    ?porte ardo:descricao ?porte_nome .
+   
+  }  
+group by ?porte_nome 
+order by desc(?numero_de_fornecedores)
+
 
 # Quatintidade de fornecedores combinado com a quantidade de UASGS que o fornecedor se relaciona 
 
