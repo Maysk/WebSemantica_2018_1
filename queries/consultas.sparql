@@ -352,3 +352,17 @@ limit 15
 # Qual item mais comprado por cada UASG
 
 # Qual o tipo de licitacao mais pedido por cada UASG
+
+
+
+#
+SELECT ?nome_modalidade count(*)
+WHERE{
+       ?licitacao a ardo:Licitacao.
+       ?licitacao a ?modalidade .
+       ?modalidade rdfs:subClassOf ardo:ModalidadeLicitacao .
+       ?modalidade rdfs:name ?nome_modalidade .
+
+  
+}
+order by ?nome_modalidade
