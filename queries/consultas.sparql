@@ -403,8 +403,22 @@ WHERE{
        ?licitacao a ardo:Licitacao.
        ?licitacao a ?modalidade .
        ?modalidade rdfs:subClassOf ardo:ModalidadeLicitacao .
-       ?modalidade rdfs:name ?nome_modalidade .
+       ?modalidade rdfs:label ?nome_modalidade .
 
   
 }
 order by ?nome_modalidade
+
+
+
+SELECT ?cnpj ?informado ?razao_social
+WHERE{
+    ?fornecedor a ardo:PessoaJuridica, ardo:Sancionado ; 
+        ardo:cnpj ?cnpj ;
+        ardo:nome_informado ?informado ; 
+        ardo:nome_fornecedor ?nome_siasg ; 
+        ardo:razao_social ?razao_social .
+
+
+}
+LIMIT 30
